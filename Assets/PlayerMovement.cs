@@ -13,6 +13,10 @@ public class PlayerMovement : MonoBehaviour
 
     public GridManager grid;
 
+    Vector2 nextPosition;
+
+    float epsilon = 0.001f; // for float comparison
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject.Find("Player").transform.position =
             new Vector2(-grid.GetCols() * grid.GetTileSize() / 2,
             grid.GetRows() * grid.GetTileSize() / 2);
+        nextPosition = GameObject.Find("Player").transform.position;
     }
     
     // Update is called once per frame
@@ -27,17 +32,27 @@ public class PlayerMovement : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        if (movement.x != 0 || movement.y != 0)
+        if ((Math.Abs(movement.x) > epsilon || Math.Abs(movement.y) > epsilon) && PlayerOnNextPosition())
         {
             if (Math.Abs(movement.x) < Math.Abs(movement.y))
             {
                 movement.x = 0;
                 if (movement.y < 0)
                 {
+                    // move down
+                    if (Math.Abs(rb.position.y - nextPosition.y) < epsilon)
+                    {
+                        nextPosition.y -= grid.GetTileSize();
+                    }
                     rb.rotation = 180;
                 }
                 else
                 {
+                    // move up
+                    if (Math.Abs(rb.position.y - nextPosition.y) < epsilon)
+                    {
+                        nextPosition.y += grid.GetTileSize();
+                    }
                     rb.rotation = 0;
                 }
             }
@@ -46,10 +61,20 @@ public class PlayerMovement : MonoBehaviour
                 movement.y = 0;
                 if (movement.x < 0)
                 {
+                    // move left
+                    if (Math.Abs(rb.position.x - nextPosition.x) < epsilon)
+                    {
+                        nextPosition.x -= grid.GetTileSize();
+                    }
                     rb.rotation = 90;
                 }
                 else
                 {
+                    // move right
+                    if (Math.Abs(rb.position.x - nextPosition.x) < epsilon)
+                    {
+                        nextPosition.x += grid.GetTileSize();
+                    }
                     rb.rotation = -90;
                 }
             }
@@ -58,6 +83,16 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        if (!PlayerOnNextPosition())
+        {
+            Vector2 dir = nextPosition - rb.position;
+            dir.Normalize();
+            rb.MovePosition(rb.position + dir * moveSpeed * Time.fixedDeltaTime);
+        }
+    }
+
+    bool PlayerOnNextPosition()
+    {
+        return Math.Abs(rb.position.x - nextPosition.x) < epsilon && Math.Abs(rb.position.y - nextPosition.y) < epsilon;
     }
 }
