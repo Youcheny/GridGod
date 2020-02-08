@@ -33,4 +33,19 @@ public class GridManager : MonoBehaviour
     {
         
     }
+
+    public int GetRows()
+    {
+        return rows;
+    }
+
+    public int GetCols()
+    {
+        return cols;
+    }
+
+    public float GetTileSize()
+    {
+        return tileSize;
+    }
 }
