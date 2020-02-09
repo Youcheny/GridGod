@@ -40,19 +40,13 @@ public class PlayerMovement : MonoBehaviour
                 if (movement.y < 0)
                 {
                     // move down
-                    if (Math.Abs(rb.position.y - nextPosition.y) < epsilon)
-                    {
-                        nextPosition.y -= grid.GetTileSize();
-                    }
+                    nextPosition.y -= grid.GetTileSize();
                     rb.rotation = 180;
                 }
                 else
                 {
                     // move up
-                    if (Math.Abs(rb.position.y - nextPosition.y) < epsilon)
-                    {
-                        nextPosition.y += grid.GetTileSize();
-                    }
+                    nextPosition.y += grid.GetTileSize();
                     rb.rotation = 0;
                 }
             }
@@ -62,19 +56,13 @@ public class PlayerMovement : MonoBehaviour
                 if (movement.x < 0)
                 {
                     // move left
-                    if (Math.Abs(rb.position.x - nextPosition.x) < epsilon)
-                    {
-                        nextPosition.x -= grid.GetTileSize();
-                    }
+                    nextPosition.x -= grid.GetTileSize();
                     rb.rotation = 90;
                 }
                 else
                 {
                     // move right
-                    if (Math.Abs(rb.position.x - nextPosition.x) < epsilon)
-                    {
-                        nextPosition.x += grid.GetTileSize();
-                    }
+                    nextPosition.x += grid.GetTileSize();
                     rb.rotation = -90;
                 }
             }
