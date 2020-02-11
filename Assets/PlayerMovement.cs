@@ -32,6 +32,13 @@ public class PlayerMovement : MonoBehaviour
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+        // store variables used for movement
+        float tileSize = grid.GetTileSize();
+        float bottomLimit = -1 * grid.GetRows() * tileSize/2;
+        float topLimit = grid.GetRows() * tileSize/2;
+        float leftLimit = -1 * grid.GetCols() * tileSize/2;
+        float rightLimit = grid.GetCols() * tileSize/2;
+
         if ((Math.Abs(movement.x) > epsilon || Math.Abs(movement.y) > epsilon) && PlayerOnNextPosition())
         {
             if (Math.Abs(movement.x) < Math.Abs(movement.y))
@@ -39,15 +46,24 @@ public class PlayerMovement : MonoBehaviour
                 movement.x = 0;
                 if (movement.y < 0)
                 {
-                    // move down
-                    nextPosition.y -= grid.GetTileSize();
                     rb.rotation = 180;
+                    // check bound
+                    if(nextPosition.y - tileSize > bottomLimit) 
+                    {
+                        // move down
+                        nextPosition.y -= tileSize;
+                        
+                    }
                 }
                 else
                 {
                     // move up
-                    nextPosition.y += grid.GetTileSize();
                     rb.rotation = 0;
+                    // check bound
+                    if(nextPosition.y + tileSize <= topLimit) 
+                    {
+                        nextPosition.y += tileSize;
+                    }
                 }
             }
             else
@@ -55,15 +71,21 @@ public class PlayerMovement : MonoBehaviour
                 movement.y = 0;
                 if (movement.x < 0)
                 {
-                    // move left
-                    nextPosition.x -= grid.GetTileSize();
                     rb.rotation = 90;
+                    // move left
+                    if(nextPosition.x - tileSize >= leftLimit) 
+                    {
+                        nextPosition.x -= tileSize;
+                    }
                 }
                 else
                 {
                     // move right
-                    nextPosition.x += grid.GetTileSize();
                     rb.rotation = -90;
+                    if(nextPosition.x + tileSize < rightLimit) 
+                    {
+                        nextPosition.x += tileSize;
+                    }
                 }
             }
         }
