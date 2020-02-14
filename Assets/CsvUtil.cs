@@ -14,12 +14,13 @@ public class CsvUtil
         char lineSeperater = '\n';
         char fieldSeperator = ',';
         string[] records = csvFile.text.Split(lineSeperater);
+        
         ArrayList result = new ArrayList();
         foreach (string record in records)
         {
-            string[] fields = record.Split(fieldSeperator);
+            string record1 = record.Trim();
+            string[] fields = record1.Split(fieldSeperator);
             result.Add(fields);
-            
         }
         return result;
     }
