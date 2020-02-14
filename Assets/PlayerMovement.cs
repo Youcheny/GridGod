@@ -5,6 +5,9 @@ using System;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // movement counter
+    public int counter = 0;
+
     public float moveSpeed;
 
     public Rigidbody2D rb;
@@ -52,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         // move down
                         nextPosition.y -= tileSize;
+                        IncrementCounter();
                         
                     }
                 }
@@ -63,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
                     if(nextPosition.y + tileSize <= topLimit) 
                     {
                         nextPosition.y += tileSize;
+                        IncrementCounter();
                     }
                 }
             }
@@ -76,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
                     if(nextPosition.x - tileSize >= leftLimit) 
                     {
                         nextPosition.x -= tileSize;
+                        IncrementCounter();
                     }
                 }
                 else
@@ -85,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
                     if(nextPosition.x + tileSize < rightLimit) 
                     {
                         nextPosition.x += tileSize;
+                        IncrementCounter();
                     }
                 }
             }
@@ -104,5 +111,15 @@ public class PlayerMovement : MonoBehaviour
     bool PlayerOnNextPosition()
     {
         return Math.Abs(rb.position.x - nextPosition.x) < epsilon && Math.Abs(rb.position.y - nextPosition.y) < epsilon;
+    }
+
+    public void IncrementCounter()
+    {
+        counter+=1;
+    }
+
+    public int GetCounter()
+    {
+        return counter;
     }
 }
