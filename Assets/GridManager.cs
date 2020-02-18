@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Models;
 
 public class GridManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerateGrid();
+        GenerateTestGrid();
     }
 
     private void GenerateGrid() {
@@ -26,6 +27,30 @@ public class GridManager : MonoBehaviour
     		}
     	}
     	Destroy(referenceTile);
+    }
+
+    private void GenerateTestGrid()
+    {
+        Tile obstacle = new Tile()
+        {
+            tile = (GameObject)Instantiate(Resources.Load("ObstacleTile")),
+            type = "ObstacleTile"
+        };
+
+        GameObject referenceTile = (GameObject)Instantiate(Resources.Load("ObstacleTile"));
+        float centerOffsetX = -cols * tileSize / 2; // center
+        float centerOffsetY = rows * tileSize / 2;
+        for (int i = 0; i < rows; ++i)
+        {
+            for (int j = 0; j < cols; ++j)
+            {
+                GameObject tile = (GameObject)Instantiate(obstacle.tile, transform);
+                float posX = j * tileSize + centerOffsetX;
+                float posY = i * -tileSize + centerOffsetY;
+                tile.transform.position = new Vector2(posX, posY);
+            }
+        }
+        Destroy(referenceTile);
     }
 
     // Update is called once per frame
