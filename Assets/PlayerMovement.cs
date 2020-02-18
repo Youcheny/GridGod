@@ -42,8 +42,16 @@ public class PlayerMovement : MonoBehaviour
         float leftLimit = -1 * grid.GetCols() * tileSize/2;
         float rightLimit = grid.GetCols() * tileSize/2;
 
+
+        if (nextPosition.x == 2 && nextPosition.y == -3)
+        {
+            return;
+        }
+
         if ((Math.Abs(movement.x) > epsilon || Math.Abs(movement.y) > epsilon) && PlayerOnNextPosition())
         {
+
+
             if (Math.Abs(movement.x) < Math.Abs(movement.y))
             {
                 movement.x = 0;
@@ -53,9 +61,13 @@ public class PlayerMovement : MonoBehaviour
                     // check bound
                     if(nextPosition.y - tileSize > bottomLimit) 
                     {
-                        // move down
-                        nextPosition.y -= tileSize;
-                        IncrementCounter();
+                        if(!(nextPosition.x == 0 && nextPosition.y - tileSize == 1))
+                        {
+                            // move down
+                            nextPosition.y -= tileSize;
+                            IncrementCounter();
+                        }
+                        
                         
                     }
                 }
@@ -66,8 +78,12 @@ public class PlayerMovement : MonoBehaviour
                     // check bound
                     if(nextPosition.y + tileSize <= topLimit) 
                     {
-                        nextPosition.y += tileSize;
-                        IncrementCounter();
+                        if (!(nextPosition.x == 0 && nextPosition.y + tileSize == 1))
+                        {
+                            nextPosition.y += tileSize;
+                            IncrementCounter();
+                        }
+                            
                     }
                 }
             }
@@ -80,8 +96,12 @@ public class PlayerMovement : MonoBehaviour
                     // move left
                     if(nextPosition.x - tileSize >= leftLimit) 
                     {
-                        nextPosition.x -= tileSize;
-                        IncrementCounter();
+                        if(!(nextPosition.x - tileSize == 0 && nextPosition.y == 1))
+                        {
+                            nextPosition.x -= tileSize;
+                            IncrementCounter();
+                        }
+                        
                     }
                 }
                 else
@@ -90,11 +110,17 @@ public class PlayerMovement : MonoBehaviour
                     rb.rotation = -90;
                     if(nextPosition.x + tileSize < rightLimit) 
                     {
-                        nextPosition.x += tileSize;
-                        IncrementCounter();
+                        if (!(nextPosition.x + tileSize == 0 && nextPosition.y == 1))
+                        {
+                            nextPosition.x += tileSize;
+                            IncrementCounter();
+                        }
+                            
                     }
                 }
             }
+            print("next pos: " + nextPosition.x + ", " + nextPosition.y);
+           
         }
     }
 
