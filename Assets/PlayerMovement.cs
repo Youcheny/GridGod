@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
 
     float epsilon = 0.001f; // for float comparison
 
+    // Store the current moving direction
+    public string CurrDir;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +47,73 @@ public class PlayerMovement : MonoBehaviour
         float leftLimit = -1 * grid.GetCols() * tileSize/2;
         float rightLimit = grid.GetCols() * tileSize/2;
 
-
-        if (nextPosition.x == 2 && nextPosition.y == -3)
+        // check whether the player reaches the end
+        if (GetTile(nextPosition.x, nextPosition.y).type == "EndTile")
         {
             return;
+        } 
+
+        // if player on ice
+        if (GetTile(nextPosition.x, nextPosition.y).type == "IceTile")
+        {
+            if(CurrDir =="down")
+            {
+                // if in bound
+                if(nextPosition.y - tileSize > bottomLimit) 
+                {
+                    Tile nextTile = GetTile(nextPosition.x, nextPosition.y-tileSize);
+                    if (nextTile.IsPassable())
+                    {
+                        nextPosition.y -= tileSize;
+                        return;
+                    }
+                }
+
+            }
+            else if(CurrDir =="up")
+            {
+                // if in bound
+                if(nextPosition.y + tileSize <= topLimit) 
+                {
+                    Tile nextTile = GetTile(nextPosition.x, nextPosition.y+tileSize);
+                    if (nextTile.IsPassable())
+                    {
+                        nextPosition.y += tileSize;
+                        return;
+                    }
+                }
+
+            }
+            else if(CurrDir =="left")
+            {
+                // if in bound
+                if(nextPosition.x - tileSize >= leftLimit) 
+                {
+                    Tile nextTile = GetTile(nextPosition.x-tileSize, nextPosition.y);
+                    if (nextTile.IsPassable())
+                    {
+                        nextPosition.x -= tileSize;
+                        return;
+                    }
+                }
+
+            }
+            else 
+            {
+                // if in bound
+                if(nextPosition.x + tileSize < rightLimit) 
+                {
+                    Tile nextTile = GetTile(nextPosition.x+tileSize, nextPosition.y);
+                    if (nextTile.IsPassable())
+                    {
+                        nextPosition.x += tileSize;
+                        return;
+                    }
+                }
+            }
+
         }
+
 
         if ((Math.Abs(movement.x) > epsilon || Math.Abs(movement.y) > epsilon) && PlayerOnNextPosition())
         {
@@ -59,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
                 if (movement.y < 0)
                 {
                     rb.rotation = 180;
+                    CurrDir = "down";
                     // check bound
                     if(nextPosition.y - tileSize > bottomLimit) 
                     {
@@ -77,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     // move up
                     rb.rotation = 0;
+                    CurrDir = "up";
                     // check bound
                     if(nextPosition.y + tileSize <= topLimit) 
                     {
@@ -97,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
                 if (movement.x < 0)
                 {
                     rb.rotation = 90;
+                    CurrDir = "left";
                     // move left
                     if(nextPosition.x - tileSize >= leftLimit) 
                     {
@@ -113,6 +182,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     // move right
                     rb.rotation = -90;
+                    CurrDir = "right";
                     if(nextPosition.x + tileSize < rightLimit) 
                     {
                         if (GetTile(nextPosition.x + tileSize, nextPosition.y).IsPassable())

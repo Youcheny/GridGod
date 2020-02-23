@@ -17,9 +17,11 @@ public class GridManager : MonoBehaviour
         Tiles = new List<List<Tile>>();
         //ReadGrid("level1.csv");
         //GenerateTestGrid();
-        GenerateGridFromCSV("Assets/Resources/level1.csv", "level1");
+        // GenerateGridFromCSV("Assets/Resources/level1.csv", "level1");
+        GenerateGridFromCSV("Assets/Resources/level2.csv", "level2");
     }
 
+    // unused
     private string[,] ReadGrid(string filename)
     {
         return  CsvUtil.readData("Assets/Resources/level1.csv", "level1");
@@ -65,6 +67,19 @@ public class GridManager : MonoBehaviour
             type = "EndTile"
         };
 
+        Tile trap = new Tile()
+        {
+            tile = (GameObject)Instantiate(Resources.Load("TrapTile")),
+            type = "TrapTile"
+        };
+
+        Tile ice = new Tile()
+        {
+            tile = (GameObject)Instantiate(Resources.Load("IceTile")),
+            type = "IceTile"
+        };
+  
+
 
 
         float centerOffsetX = -cols * tileSize / 2; // center
@@ -109,15 +124,25 @@ public class GridManager : MonoBehaviour
                     };
                     tileRow.Add(obstacleTile);
                 }
-                else if (GridCSV[i, j] == "N")
+                else if (GridCSV[i, j] == "T")
                 {
-                    tile = (GameObject)Instantiate(normal.tile, transform);
-                    NormalTile normalTile = new NormalTile()
+                    tile = (GameObject)Instantiate(trap.tile, transform);
+                    TrapTile trapTile = new TrapTile()
                     {
                         tile = tile,
-                        type = "NormalTile"
+                        type = "TrapTile"
                     };
-                    tileRow.Add(normalTile);
+                    tileRow.Add(trapTile);
+                }
+                else if (GridCSV[i, j] == "I")
+                {
+                    tile = (GameObject)Instantiate(ice.tile, transform);
+                    IceTile iceTile = new IceTile()
+                    {
+                        tile = tile,
+                        type = "IceTile"
+                    };
+                    tileRow.Add(iceTile);
                 }
                 else
                 {
