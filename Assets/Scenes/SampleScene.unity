@@ -610,6 +610,10 @@ MonoBehaviour:
   moveSpeed: 5
   rb: {fileID: 1840347733}
   grid: {fileID: 0}
+  CurrDir: 
+  IsGameOver: 0
+  currFrameX: 0
+  currFrameY: 0
 --- !u!50 &1840347733
 Rigidbody2D:
   serializedVersion: 4

@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         nextPosition = GameObject.Find("Player").transform.position;
         currFrameX = nextPosition.x;
         currFrameY = nextPosition.y;
-        Destroy(grid.Consumables[0][4].consumable);
+        
     }
     
     // Update is called once per frame
@@ -64,6 +64,22 @@ public class PlayerMovement : MonoBehaviour
         if (GetTile(nextPosition.x, nextPosition.y).type == "EndTile")
         {
             IsGameOver = true;
+            return;
+        }
+        // if on a coin
+        if (GetConsumable(nextPosition.x, nextPosition.y).type == "CoinTile")
+        {
+            if (playerStats.Consumables.ContainsKey("Coin"))
+            {
+                playerStats.Consumables["Coin"]++;
+            }
+            else
+            {
+                playerStats.Consumables["Coin"] = 1;
+            }
+            Destroy(GetConsumable(nextPosition.x, nextPosition.y).consumable);
+            print("current position: " + nextPosition.x + " " + nextPosition.y);
+            GetConsumable(nextPosition.x, nextPosition.y).type = "null";
             return;
         }
 
@@ -146,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
+        
         currFrameX = nextPosition.x;
         currFrameY = nextPosition.y;
 
@@ -268,5 +285,13 @@ public class PlayerMovement : MonoBehaviour
         return grid.GetTiles()[row][col];
     }
 
-    
+    private Consumable GetConsumable(float x, float y)
+    {
+        int row = grid.GetRows() / 2 - (int)y;
+        int col = grid.GetCols() / 2 + (int)x;
+        //print("x: " + x + "y: " + y + ";row: " + row + "; col: " + col);
+        return grid.Consumables[row][col];
+    }
+
+
 }

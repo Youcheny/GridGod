@@ -13,7 +13,7 @@ namespace Models
 
         public Consumable()
         {
-
+            
         }
 
         virtual public void OnCollect()

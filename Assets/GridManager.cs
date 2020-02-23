@@ -81,16 +81,7 @@ public class GridManager : MonoBehaviour
             tile = (GameObject)Instantiate(Resources.Load("IceTile")),
             type = "IceTile"
         };
-        Consumable coin = new Consumable()
-        {
-            consumable = (GameObject)Instantiate(Resources.Load("Coin")),
-            type = "CoinTile"
-        };
-        Consumable transparent = new Consumable()
-        {
-            consumable = (GameObject)Instantiate(Resources.Load("TransparentTile")),
-            type = "TrnasparentTile"
-        };
+
 
 
 
@@ -185,8 +176,6 @@ public class GridManager : MonoBehaviour
         Destroy(end.tile);
         Destroy(trap.tile);
         Destroy(ice.tile);
-        Destroy(coin.consumable);
-        Destroy(transparent.consumable);
         
         //bool x = await Task.FromResult(false);
         
@@ -204,7 +193,7 @@ public class GridManager : MonoBehaviour
         Consumable transparent = new Consumable()
         {
             consumable = (GameObject)Instantiate(Resources.Load("TransparentTile")),
-            type = "TrnasparentTile"
+            type = "TransparentTile"
         };
 
         float centerOffsetX = -cols * tileSize / 2; // center
