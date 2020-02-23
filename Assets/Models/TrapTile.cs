@@ -10,7 +10,7 @@ namespace Models
     {
         public bool Vulnerable = false;
 
-        public bool IsPassable()
+        public override bool IsPassable()
         {
             if(Vulnerable)
             {

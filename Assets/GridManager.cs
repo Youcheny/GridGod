@@ -14,6 +14,7 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Tiles = new List<List<Tile>>();
         ReadGrid("insfal");
         GenerateTestGrid();
     }
@@ -48,20 +49,20 @@ public class GridManager : MonoBehaviour
 
         Tile normal = new Tile()
         {
-            tile = (GameObject)Instantiate(Resources.Load("Tile")),
-            type = "Tile"
+            tile = (GameObject)Instantiate(Resources.Load("NormalTile")),
+            type = "NormalTile"
         };
 
         Tile start = new Tile()
         {
-            tile = (GameObject)Instantiate(Resources.Load("TrapTile")),
-            type = "TrapTile"
+            tile = (GameObject)Instantiate(Resources.Load("StartTile")),
+            type = "StartTile"
         };
 
         Tile end = new Tile()
         {
-            tile = (GameObject)Instantiate(Resources.Load("TrapTileActivated")),
-            type = "TrapTileActivated"
+            tile = (GameObject)Instantiate(Resources.Load("EndTile")),
+            type = "EndTile"
         };
 
         
@@ -70,6 +71,7 @@ public class GridManager : MonoBehaviour
         float centerOffsetY = rows * tileSize / 2;
         for (int i = 0; i < rows; ++i)
         {
+            List<Tile> tileRow = new List<Tile>();
             for (int j = 0; j < cols; ++j)
             {
                 GameObject tile;
@@ -77,26 +79,51 @@ public class GridManager : MonoBehaviour
                 if (i == 0 && j == 0)
                 {
                     tile = (GameObject)Instantiate(start.tile, transform);
-                    
+                    StartTile startTile = new StartTile()
+                    {
+                        tile = tile,
+                        type = "StartTile"
+                    };
+                    tileRow.Add(startTile);
                 }
                 else if(i == rows - 1 && j == cols - 1)
                 {
                     tile = (GameObject)Instantiate(end.tile, transform);
+                    EndTile endTile = new EndTile()
+                    {
+                        tile = tile,
+                        type = "EndTile"
+                    };
+                    tileRow.Add(endTile);
                 }
                 else if(i == 3 && j == 3)
                 {
                     tile = (GameObject)Instantiate(obstacle.tile, transform);
+                    ObstacleTile obstacleTile = new ObstacleTile()
+                    {
+                        tile = tile,
+                        type = "ObstacleTile"
+                    };
+                    tileRow.Add(obstacleTile);
                 }
                 else
                 {
                     tile = (GameObject)Instantiate(normal.tile, transform);
+                    NormalTile normalTile = new NormalTile()
+                    {
+                        tile = tile,
+                        type = "NormalTile"
+                    };
+                    tileRow.Add(normalTile);
                 }
 
                 float posX = j * tileSize + centerOffsetX;
                 float posY = i * -tileSize + centerOffsetY;
                 tile.transform.position = new Vector2(posX, posY);
-
+                
             }
+
+            Tiles.Add(tileRow);
         }
 
 
@@ -125,5 +152,10 @@ public class GridManager : MonoBehaviour
     public float GetTileSize()
     {
         return tileSize;
+    }
+
+    public List<List<Tile>> GetTiles()
+    {
+        return Tiles;
     }
 }

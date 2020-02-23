@@ -8,7 +8,7 @@ namespace Models
 {
     public class StartTile : Tile
     {
-        public bool IsPassable()
+        public override bool IsPassable()
         {
             return true;
         }
