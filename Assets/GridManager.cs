@@ -8,10 +8,19 @@ public class GridManager : MonoBehaviour
 	private int rows = 8;
 	private int cols = 6;
 	private float tileSize = 1;
+
+    private List<List<Tile>> Tiles;
+
     // Start is called before the first frame update
     void Start()
     {
+        ReadGrid("insfal");
         GenerateTestGrid();
+    }
+
+    private void ReadGrid(string filename)
+    {
+
     }
 
     private void GenerateGrid() {

@@ -12,6 +12,11 @@ namespace Models
         {
 
         }
+
+        public bool IsPassale()
+        {
+            return true;
+        }
     }
 }
 
