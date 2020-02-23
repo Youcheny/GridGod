@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats
+public class PlayerStats: MonoBehaviour
 {
     // Store the current moving direction
     private string CurrDir;
     // Store the current tile player is on
     private string CurrTile;
-    public Dictionary<string, int> Consumables = new Dictionary<string, int>();
+    public Dictionary<string, int> Consumables = new Dictionary<string, int>()
+    {
+        {"Coin",0}
+    };
+
     // Start is called before the first frame update
   
 

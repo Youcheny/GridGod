@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         // if on a coin
-        if (GetConsumable(nextPosition.x, nextPosition.y).type == "CoinTile")
+        if (GetConsumable( (int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type == "CoinTile")
         {
             if (playerStats.Consumables.ContainsKey("Coin"))
             {
@@ -77,9 +77,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 playerStats.Consumables["Coin"] = 1;
             }
-            Destroy(GetConsumable(nextPosition.x, nextPosition.y).consumable);
-            print("current position: " + nextPosition.x + " " + nextPosition.y);
-            GetConsumable(nextPosition.x, nextPosition.y).type = "null";
+            print("Coins: "+  playerStats.Consumables["Coin"]);
+            Destroy(GetConsumable( (int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).consumable);
+            GetConsumable( (int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type = "null";
             return;
         }
 
