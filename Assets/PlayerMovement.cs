@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Models;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -61,9 +62,10 @@ public class PlayerMovement : MonoBehaviour
                     // check bound
                     if(nextPosition.y - tileSize > bottomLimit) 
                     {
-                        if(!(nextPosition.x == 0 && nextPosition.y - tileSize == 1))
+                        if(GetTile(nextPosition.x, nextPosition.y - tileSize).IsPassale())
                         {
                             // move down
+                            print("next tile: " + GetTile(nextPosition.x, nextPosition.y - tileSize).type);
                             nextPosition.y -= tileSize;
                             IncrementCounter();
                         }
@@ -78,8 +80,9 @@ public class PlayerMovement : MonoBehaviour
                     // check bound
                     if(nextPosition.y + tileSize <= topLimit) 
                     {
-                        if (!(nextPosition.x == 0 && nextPosition.y + tileSize == 1))
+                        if (GetTile(nextPosition.x, nextPosition.y + tileSize).IsPassale())
                         {
+                            print("next tile: " + GetTile(nextPosition.x, nextPosition.y + tileSize).type);
                             nextPosition.y += tileSize;
                             IncrementCounter();
                         }
@@ -96,8 +99,9 @@ public class PlayerMovement : MonoBehaviour
                     // move left
                     if(nextPosition.x - tileSize >= leftLimit) 
                     {
-                        if(!(nextPosition.x - tileSize == 0 && nextPosition.y == 1))
+                        if(GetTile(nextPosition.x - tileSize, nextPosition.y).IsPassale())
                         {
+                            print("next tile: " + GetTile(nextPosition.x - tileSize, nextPosition.y).type);
                             nextPosition.x -= tileSize;
                             IncrementCounter();
                         }
@@ -110,8 +114,9 @@ public class PlayerMovement : MonoBehaviour
                     rb.rotation = -90;
                     if(nextPosition.x + tileSize < rightLimit) 
                     {
-                        if (!(nextPosition.x + tileSize == 0 && nextPosition.y == 1))
+                        if (GetTile(nextPosition.x + tileSize, nextPosition.y).IsPassale())
                         {
+                            print("next tile: " + GetTile(nextPosition.x + tileSize, nextPosition.y).type);
                             nextPosition.x += tileSize;
                             IncrementCounter();
                         }
@@ -147,5 +152,13 @@ public class PlayerMovement : MonoBehaviour
     public int GetCounter()
     {
         return counter;
+    }
+
+    private Tile GetTile(float x, float y)
+    {
+        int col = (int)x + grid.GetCols() / 2;
+        int row = (int)y + grid.GetRows() / 2;
+
+        return grid.GetTiles()[row][col];
     }
 }
