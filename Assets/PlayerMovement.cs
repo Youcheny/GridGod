@@ -24,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
     // Store the current moving direction
     public string CurrDir;
 
+    public bool IsGameOver = false;
+
+    public float currFrameX;
+    public float currFrameY;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
             new Vector2(-grid.GetCols() * grid.GetTileSize() / 2,
             grid.GetRows() * grid.GetTileSize() / 2);
         nextPosition = GameObject.Find("Player").transform.position;
+        currFrameX = nextPosition.x;
+        currFrameY = nextPosition.y;
     }
     
     // Update is called once per frame
@@ -47,11 +53,17 @@ public class PlayerMovement : MonoBehaviour
         float leftLimit = -1 * grid.GetCols() * tileSize/2;
         float rightLimit = grid.GetCols() * tileSize/2;
 
+        if (IsGameOver)
+        {
+            return;
+        }
+
         // check whether the player reaches the end
         if (GetTile(nextPosition.x, nextPosition.y).type == "EndTile")
         {
+            IsGameOver = true;
             return;
-        } 
+        }
 
         // if player on ice
         if (GetTile(nextPosition.x, nextPosition.y).type == "IceTile")
@@ -114,6 +126,26 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+        // if player on trap, compare if player moved since last frame
+        if(GetTile(nextPosition.x, nextPosition.y).type == "TrapTile")
+        {
+            if(nextPosition.x != currFrameX || nextPosition.y != currFrameY)
+            {
+                TrapTile currTrapTile = (TrapTile)(GetTile(nextPosition.x, nextPosition.y));
+                if (currTrapTile.IsVulnerable)
+                {
+                    IsGameOver = true;
+                    return;
+                }
+                else
+                {
+                    ((TrapTile)(GetTile(nextPosition.x, nextPosition.y))).IsVulnerable = true;
+                }
+            }
+
+        }
+        currFrameX = nextPosition.x;
+        currFrameY = nextPosition.y;
 
         if ((Math.Abs(movement.x) > epsilon || Math.Abs(movement.y) > epsilon) && PlayerOnNextPosition())
         {
@@ -196,8 +228,9 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
             print("next pos: " + nextPosition.x + ", " + nextPosition.y);
-           
+            
         }
+
     }
 
     void FixedUpdate()
@@ -229,7 +262,7 @@ public class PlayerMovement : MonoBehaviour
     {
         int row = grid.GetRows() / 2 - (int)y;
         int col = grid.GetCols() / 2 + (int)x;
-        print("x: "+ x+ "y: "+ y+ ";row: "+ row+"; col: "+ col);
+        //print("x: " + x + "y: " + y + ";row: " + row + "; col: " + col);
         return grid.GetTiles()[row][col];
     }
 

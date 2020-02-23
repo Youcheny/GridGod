@@ -169,6 +169,8 @@ public class GridManager : MonoBehaviour
         Destroy(normal.tile);
         Destroy(start.tile);
         Destroy(end.tile);
+        Destroy(trap.tile);
+        Destroy(ice.tile);
     }
 
     private void GenerateTestGrid()

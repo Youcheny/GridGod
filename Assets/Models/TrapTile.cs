@@ -8,18 +8,11 @@ namespace Models
 {
     public class TrapTile : Tile
     {
-        public bool Vulnerable = false;
+        public bool IsVulnerable = false;
 
         public override bool IsPassable()
         {
-            if(Vulnerable)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return true;
         }
     }
 }
