@@ -15,13 +15,14 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         Tiles = new List<List<Tile>>();
-        ReadGrid("insfal");
-        GenerateTestGrid();
+        //ReadGrid("level1.csv");
+        //GenerateTestGrid();
+        GenerateGridFromCSV("Assets/Resources/level1.csv", "level1");
     }
 
-    private void ReadGrid(string filename)
+    private string[,] ReadGrid(string filename)
     {
-
+        return  CsvUtil.readData("Assets/Resources/level1.csv", "level1");
     }
 
     private void GenerateGrid() {
@@ -37,6 +38,112 @@ public class GridManager : MonoBehaviour
             }
         }
         Destroy(referenceTile);
+    }
+    private void GenerateGridFromCSV(string filepath, string filename)
+    {
+        Tile obstacle = new Tile()
+        {
+            tile = (GameObject)Instantiate(Resources.Load("ObstacleTile")),
+            type = "ObstacleTile"
+        };
+
+        Tile normal = new Tile()
+        {
+            tile = (GameObject)Instantiate(Resources.Load("NormalTile")),
+            type = "NormalTile"
+        };
+
+        Tile start = new Tile()
+        {
+            tile = (GameObject)Instantiate(Resources.Load("StartTile")),
+            type = "StartTile"
+        };
+
+        Tile end = new Tile()
+        {
+            tile = (GameObject)Instantiate(Resources.Load("EndTile")),
+            type = "EndTile"
+        };
+
+
+
+        float centerOffsetX = -cols * tileSize / 2; // center
+        float centerOffsetY = rows * tileSize / 2;
+
+        string[,] GridCSV = CsvUtil.readData(filepath, filename);
+
+        for (int i = 0; i < GridCSV.GetLength(0); i++)
+        {
+            List<Tile> tileRow = new List<Tile>();
+            for (int j = 0; j < GridCSV.GetLength(1); j++)
+            {
+                GameObject tile;
+
+                if (GridCSV[i,j] == "S")
+                {
+                    tile = (GameObject)Instantiate(start.tile, transform);
+                    StartTile startTile = new StartTile()
+                    {
+                        tile = tile,
+                        type = "StartTile"
+                    };
+                    tileRow.Add(startTile);
+                }
+                else if (GridCSV[i, j] == "E")
+                {
+                    tile = (GameObject)Instantiate(end.tile, transform);
+                    EndTile endTile = new EndTile()
+                    {
+                        tile = tile,
+                        type = "EndTile"
+                    };
+                    tileRow.Add(endTile);
+                }
+                else if (GridCSV[i, j] == "W") //W = wallobstacle
+                {
+                    tile = (GameObject)Instantiate(obstacle.tile, transform);
+                    ObstacleTile obstacleTile = new ObstacleTile()
+                    {
+                        tile = tile,
+                        type = "ObstacleTile"
+                    };
+                    tileRow.Add(obstacleTile);
+                }
+                else if (GridCSV[i, j] == "N")
+                {
+                    tile = (GameObject)Instantiate(normal.tile, transform);
+                    NormalTile normalTile = new NormalTile()
+                    {
+                        tile = tile,
+                        type = "NormalTile"
+                    };
+                    tileRow.Add(normalTile);
+                }
+                else
+                {
+                    tile = (GameObject)Instantiate(normal.tile, transform);
+                    NormalTile normalTile = new NormalTile()
+                    {
+                        tile = tile,
+                        type = "NormalTile"
+                    };
+                    tileRow.Add(normalTile);
+                }
+
+                float posX = j * tileSize + centerOffsetX;
+                float posY = i * -tileSize + centerOffsetY;
+                tile.transform.position = new Vector2(posX, posY);
+            }
+            Tiles.Add(tileRow);
+        }
+
+
+
+
+        Destroy(obstacle.tile);
+        Destroy(normal.tile);
+        Destroy(start.tile);
+        Destroy(end.tile);
     }
 
     private void GenerateTestGrid()
