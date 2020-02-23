@@ -2,23 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Models;
-
+using System.Threading.Tasks;
 public class GridManager : MonoBehaviour
 {
 	private int rows = 8;
 	private int cols = 6;
 	private float tileSize = 1;
-
+    
     private List<List<Tile>> Tiles;
-
+    public List<List<Consumable>> Consumables;
     // Start is called before the first frame update
     void Start()
     {
         Tiles = new List<List<Tile>>();
+        Consumables = new List<List<Consumable>>();
         //ReadGrid("level1.csv");
         //GenerateTestGrid();
         // GenerateGridFromCSV("Assets/Resources/level1.csv", "level1");
         GenerateGridFromCSV("Assets/Resources/level2.csv", "level2");
+        
+        GenerateConsumableFromCSV("Assets/Resources/consumableGrid1.csv", "consumableGrid1");
     }
 
     // unused
@@ -78,7 +81,17 @@ public class GridManager : MonoBehaviour
             tile = (GameObject)Instantiate(Resources.Load("IceTile")),
             type = "IceTile"
         };
-  
+        Consumable coin = new Consumable()
+        {
+            consumable = (GameObject)Instantiate(Resources.Load("Coin")),
+            type = "CoinTile"
+        };
+        Consumable transparent = new Consumable()
+        {
+            consumable = (GameObject)Instantiate(Resources.Load("TransparentTile")),
+            type = "TrnasparentTile"
+        };
+
 
 
 
@@ -86,14 +99,17 @@ public class GridManager : MonoBehaviour
         float centerOffsetY = rows * tileSize / 2;
 
         string[,] GridCSV = CsvUtil.readData(filepath, filename);
+        string[,] ConsumableCSV = CsvUtil.readData("Assets/Resources/consumableGrid1.csv", "consumableGrid1");
 
         for (int i = 0; i < GridCSV.GetLength(0); i++)
         {
             List<Tile> tileRow = new List<Tile>();
+            List<Consumable> consumableRow = new List<Consumable>();
+
             for (int j = 0; j < GridCSV.GetLength(1); j++)
             {
                 GameObject tile;
-
+                GameObject consumable;
                 if (GridCSV[i,j] == "S")
                 {
                     tile = (GameObject)Instantiate(start.tile, transform);
@@ -154,12 +170,34 @@ public class GridManager : MonoBehaviour
                     };
                     tileRow.Add(normalTile);
                 }
+                if (ConsumableCSV[i, j] == "C")
+                {
+                    consumable = (GameObject)Instantiate(coin.consumable, transform);
+                    Coin coinTile = new Coin()
+                    {
+                        consumable = consumable,
+                        type = "CoinTile"
+                    };
+                    consumableRow.Add(coinTile);
+                }
+                else
+                {
+                    consumable = (GameObject)Instantiate(transparent.consumable, transform);
+                    TransparentTile transparentTile = new TransparentTile()
+                    {
+                        consumable = consumable,
+                        type = "TransparentTile"
+                    };
+                    consumableRow.Add(transparentTile);
+                }
 
                 float posX = j * tileSize + centerOffsetX;
                 float posY = i * -tileSize + centerOffsetY;
                 tile.transform.position = new Vector2(posX, posY);
+                consumable.transform.position = new Vector2(posX, posY);
             }
             Tiles.Add(tileRow);
+            Consumables.Add(consumableRow);
         }
 
 
@@ -171,6 +209,80 @@ public class GridManager : MonoBehaviour
         Destroy(end.tile);
         Destroy(trap.tile);
         Destroy(ice.tile);
+        Destroy(coin.consumable);
+        Destroy(transparent.consumable);
+        
+        //bool x = await Task.FromResult(false);
+        
+    }
+
+
+    private void GenerateConsumableFromCSV(string filepath, string filename)
+    {
+        print("entering");
+        Consumable coin = new Consumable()
+        {
+            consumable = (GameObject)Instantiate(Resources.Load("Coin")),
+            type = "CoinTile"
+        };
+        Consumable transparent = new Consumable()
+        {
+            consumable = (GameObject)Instantiate(Resources.Load("TransparentTile")),
+            type = "TrnasparentTile"
+        };
+
+        float centerOffsetX = -cols * tileSize / 2; // center
+        float centerOffsetY = rows * tileSize / 2;
+
+        string[,] GridCSV = CsvUtil.readData(filepath, filename);
+        
+
+        for (int i = 0; i < GridCSV.GetLength(0); i++)
+        {
+           
+            List<Consumable> consumableRow = new List<Consumable>();
+
+            for (int j = 0; j < GridCSV.GetLength(1); j++)
+            {
+               
+                GameObject consumable;
+                
+                if (GridCSV[i, j] == "C")
+                {
+                    consumable = (GameObject)Instantiate(coin.consumable, transform);
+                    Coin coinTile = new Coin()
+                    {
+                        consumable = consumable,
+                        type = "CoinTile"
+                    };
+                    consumableRow.Add(coinTile);
+                }
+                else
+                {
+                    consumable = (GameObject)Instantiate(transparent.consumable, transform);
+                    TransparentTile transparentTile = new TransparentTile()
+                    {
+                        consumable = consumable,
+                        type = "TransparentTile"
+                    };
+                    consumableRow.Add(transparentTile);
+                }
+
+                float posX = j * tileSize + centerOffsetX;
+                float posY = i * -tileSize + centerOffsetY;
+                
+                consumable.transform.position = new Vector2(posX, posY);
+            }
+            
+            Consumables.Add(consumableRow);
+        }
+
+
+
+
+        
+        Destroy(coin.consumable);
+        Destroy(transparent.consumable);
     }
 
     private void GenerateTestGrid()

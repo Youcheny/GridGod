@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movement;
 
     public GridManager grid;
-
+    public PlayerStats playerStats;
     Vector2 nextPosition;
 
     float epsilon = 0.001f; // for float comparison
@@ -33,12 +33,14 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         grid = GameObject.Find("GridHolder").GetComponent<GridManager>();
+        playerStats = new PlayerStats();
         GameObject.Find("Player").transform.position =
             new Vector2(-grid.GetCols() * grid.GetTileSize() / 2,
             grid.GetRows() * grid.GetTileSize() / 2);
         nextPosition = GameObject.Find("Player").transform.position;
         currFrameX = nextPosition.x;
         currFrameY = nextPosition.y;
+        Destroy(grid.Consumables[0][4].consumable);
     }
     
     // Update is called once per frame

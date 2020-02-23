@@ -8,11 +8,11 @@ public class PlayerStats : MonoBehaviour
     private string CurrDir;
     // Store the current tile player is on
     private string CurrTile;
-
+    public Dictionary<string, int> Consumables;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Consumables = new Dictionary<string, int>();
     }
 
     // Update is called once per frame
