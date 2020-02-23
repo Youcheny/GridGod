@@ -104,12 +104,10 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < GridCSV.GetLength(0); i++)
         {
             List<Tile> tileRow = new List<Tile>();
-            List<Consumable> consumableRow = new List<Consumable>();
 
             for (int j = 0; j < GridCSV.GetLength(1); j++)
             {
                 GameObject tile;
-                GameObject consumable;
                 if (GridCSV[i,j] == "S")
                 {
                     tile = (GameObject)Instantiate(start.tile, transform);
@@ -170,34 +168,12 @@ public class GridManager : MonoBehaviour
                     };
                     tileRow.Add(normalTile);
                 }
-                if (ConsumableCSV[i, j] == "C")
-                {
-                    consumable = (GameObject)Instantiate(coin.consumable, transform);
-                    Coin coinTile = new Coin()
-                    {
-                        consumable = consumable,
-                        type = "CoinTile"
-                    };
-                    consumableRow.Add(coinTile);
-                }
-                else
-                {
-                    consumable = (GameObject)Instantiate(transparent.consumable, transform);
-                    TransparentTile transparentTile = new TransparentTile()
-                    {
-                        consumable = consumable,
-                        type = "TransparentTile"
-                    };
-                    consumableRow.Add(transparentTile);
-                }
 
                 float posX = j * tileSize + centerOffsetX;
                 float posY = i * -tileSize + centerOffsetY;
                 tile.transform.position = new Vector2(posX, posY);
-                consumable.transform.position = new Vector2(posX, posY);
             }
             Tiles.Add(tileRow);
-            Consumables.Add(consumableRow);
         }
 
 
