@@ -13,7 +13,7 @@ namespace Models
 
         }
 
-        virtual public bool IsPassale()
+        virtual public bool IsPassable()
         {
             return true;
         }

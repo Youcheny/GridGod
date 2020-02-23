@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
                     // check bound
                     if(nextPosition.y - tileSize > bottomLimit) 
                     {
-                        if(GetTile(nextPosition.x, nextPosition.y - tileSize).IsPassale())
+                        if(GetTile(nextPosition.x, nextPosition.y - tileSize).IsPassable())
                         {
                             // move down
                             print("next tile: " + GetTile(nextPosition.x, nextPosition.y - tileSize).type);
@@ -80,7 +80,8 @@ public class PlayerMovement : MonoBehaviour
                     // check bound
                     if(nextPosition.y + tileSize <= topLimit) 
                     {
-                        if (GetTile(nextPosition.x, nextPosition.y + tileSize).IsPassale())
+    
+                        if (GetTile(nextPosition.x, nextPosition.y + tileSize).IsPassable())
                         {
                             print("next tile: " + GetTile(nextPosition.x, nextPosition.y + tileSize).type);
                             nextPosition.y += tileSize;
@@ -99,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
                     // move left
                     if(nextPosition.x - tileSize >= leftLimit) 
                     {
-                        if(GetTile(nextPosition.x - tileSize, nextPosition.y).IsPassale())
+                        if(GetTile(nextPosition.x - tileSize, nextPosition.y).IsPassable())
                         {
                             print("next tile: " + GetTile(nextPosition.x - tileSize, nextPosition.y).type);
                             nextPosition.x -= tileSize;
@@ -114,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
                     rb.rotation = -90;
                     if(nextPosition.x + tileSize < rightLimit) 
                     {
-                        if (GetTile(nextPosition.x + tileSize, nextPosition.y).IsPassale())
+                        if (GetTile(nextPosition.x + tileSize, nextPosition.y).IsPassable())
                         {
                             print("next tile: " + GetTile(nextPosition.x + tileSize, nextPosition.y).type);
                             nextPosition.x += tileSize;
@@ -156,9 +157,11 @@ public class PlayerMovement : MonoBehaviour
 
     private Tile GetTile(float x, float y)
     {
-        int col = (int)x + grid.GetCols() / 2;
-        int row = (int)y + grid.GetRows() / 2;
-
+        int row = grid.GetRows() / 2 - (int)y;
+        int col = grid.GetCols() / 2 + (int)x;
+        print("x: "+ x+ "y: "+ y+ ";row: "+ row+"; col: "+ col);
         return grid.GetTiles()[row][col];
     }
+
+    
 }

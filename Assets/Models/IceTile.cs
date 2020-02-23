@@ -9,7 +9,7 @@ namespace Models
     public class IceTile : Tile
     {
 
-        public bool IsPassable()
+        public override bool IsPassable()
         {
             return true;
         }
