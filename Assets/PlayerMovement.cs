@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 nextPosition;
 
     float epsilon = 0.001f; // for float comparison
+    float joystickSensitivity = 0.002222f;
 
     // Store the current moving direction
     public string CurrDir;
@@ -50,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.x = joystick.Horizontal + Input.GetAxis("Horizontal");
-        movement.y = joystick.Vertical + Input.GetAxis("Vertical");
+        movement.x = joystick.Horizontal * joystickSensitivity + Input.GetAxis("Horizontal");
+        movement.y = joystick.Vertical * joystickSensitivity + Input.GetAxis("Vertical");
         // store variables used for movement
         float tileSize = grid.GetTileSize();
         float bottomLimit = -1 * grid.GetRows() * tileSize/2;
