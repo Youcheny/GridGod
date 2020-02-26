@@ -29,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     public float currFrameX;
     public float currFrameY;
 
+    // Joystick
+    protected Joystick joystick;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,14 +43,15 @@ public class PlayerMovement : MonoBehaviour
         nextPosition = GameObject.Find("Player").transform.position;
         currFrameX = nextPosition.x;
         currFrameY = nextPosition.y;
-        
+
+        joystick = FindObjectOfType<Joystick>();
     }
     
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movement.x = joystick.Horizontal + Input.GetAxis("Horizontal");
+        movement.y = joystick.Vertical + Input.GetAxis("Vertical");
         // store variables used for movement
         float tileSize = grid.GetTileSize();
         float bottomLimit = -1 * grid.GetRows() * tileSize/2;
