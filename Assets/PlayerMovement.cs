@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // movement counter
     public int counter = 0;
+    public int stepConstraint = 15;
 
     public float moveSpeed;
 
@@ -33,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     // Joystick
     protected Joystick joystick;
 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +67,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        //if the player reach the step limit
+        if (stepConstraint - counter <=0) {
+            return;
+        }
+
         // check whether the player reaches the end
         if (GetTile(nextPosition.x, nextPosition.y).type == "EndTile")
         {
@@ -82,9 +89,20 @@ public class PlayerMovement : MonoBehaviour
             {
                 playerStats.Consumables["Coin"] = 1;
             }
+
             print("Coins: "+  playerStats.Consumables["Coin"]);
-            Destroy(GetConsumable( (int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).consumable);
+            Destroy(GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).consumable);
             GetConsumable( (int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type = "null";
+            return;
+        }
+        // if on a stepAdder
+        if (GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).type == "StepAdderTile")
+        {
+            stepConstraint += 5;
+
+            
+            Destroy(GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).consumable);
+            GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).type = "null";
             return;
         }
 
@@ -163,6 +181,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     ((TrapTile)(GetTile(nextPosition.x, nextPosition.y))).IsVulnerable = true;
+
                 }
             }
 
@@ -277,9 +296,9 @@ public class PlayerMovement : MonoBehaviour
         counter+=1;
     }
 
-    public int GetCounter()
+    public int GetRemainingSteps()
     {
-        return counter;
+        return stepConstraint - counter;
     }
 
     private Tile GetTile(float x, float y)

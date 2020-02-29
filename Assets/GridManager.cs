@@ -11,6 +11,10 @@ public class GridManager : MonoBehaviour
     
     private List<List<Tile>> Tiles;
     public List<List<Consumable>> Consumables;
+
+    //spike tile for replacement
+    public Tile spike = null;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -81,12 +85,19 @@ public class GridManager : MonoBehaviour
             tile = (GameObject)Instantiate(Resources.Load("IceTile")),
             type = "IceTile"
         };
+        Tile spike = new Tile()
+        {
+            tile = (GameObject)Instantiate(Resources.Load("SpikeTile")),
+            type = "SpikeTile"
+        };
+  
 
 
 
 
 
-        float centerOffsetX = -cols * tileSize / 2; // center
+
+    float centerOffsetX = -cols * tileSize / 2; // center
         float centerOffsetY = rows * tileSize / 2;
 
         string[,] GridCSV = CsvUtil.readData(filepath, filename);
@@ -136,6 +147,13 @@ public class GridManager : MonoBehaviour
                     {
                         tile = tile,
                         type = "TrapTile"
+                    };
+                    
+                    tile = (GameObject)Instantiate(spike.tile, transform);
+                    StartTile startTile = new StartTile()
+                    {
+                        tile = tile,
+                        type = "StartTile"
                     };
                     tileRow.Add(trapTile);
                 }
@@ -195,6 +213,11 @@ public class GridManager : MonoBehaviour
             consumable = (GameObject)Instantiate(Resources.Load("TransparentTile")),
             type = "TransparentTile"
         };
+        Consumable stepAdder = new Consumable()
+        {
+            consumable = (GameObject)Instantiate(Resources.Load("StepAdder")),
+            type = "StepAdderTile"
+        };
 
         float centerOffsetX = -cols * tileSize / 2; // center
         float centerOffsetY = rows * tileSize / 2;
@@ -222,7 +245,17 @@ public class GridManager : MonoBehaviour
                     };
                     consumableRow.Add(coinTile);
                 }
-                else
+                else if (GridCSV[i, j] == "S")
+                {
+                    consumable = (GameObject)Instantiate(stepAdder.consumable, transform);
+                    StepAdder stepAdderTile = new StepAdder()
+                    {
+                        consumable = consumable,
+                        type = "StepAdderTile"
+                    };
+                    consumableRow.Add(stepAdderTile);
+                }
+                else 
                 {
                     consumable = (GameObject)Instantiate(transparent.consumable, transform);
                     TransparentTile transparentTile = new TransparentTile()
@@ -248,6 +281,7 @@ public class GridManager : MonoBehaviour
         
         Destroy(coin.consumable);
         Destroy(transparent.consumable);
+        Destroy(stepAdder.consumable);
     }
 
     private void GenerateTestGrid()
@@ -368,5 +402,11 @@ public class GridManager : MonoBehaviour
     public List<List<Tile>> GetTiles()
     {
         return Tiles;
+    }
+    public void ReloadTrap(int row, int col)
+    {
+        Tile temp = Tiles[row][col];
+
+        Tiles[row][col] = spike;
     }
 }
