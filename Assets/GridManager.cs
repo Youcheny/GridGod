@@ -149,12 +149,7 @@ public class GridManager : MonoBehaviour
                         type = "TrapTile"
                     };
                     
-                    tile = (GameObject)Instantiate(spike.tile, transform);
-                    StartTile startTile = new StartTile()
-                    {
-                        tile = tile,
-                        type = "StartTile"
-                    };
+                    
                     tileRow.Add(trapTile);
                 }
                 else if (GridCSV[i, j] == "I")

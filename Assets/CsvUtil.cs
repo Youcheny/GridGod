@@ -9,8 +9,10 @@ public class CsvUtil
     // Read data from CSV file
     public static string[,] readData(string filepath, string filename)
     {
-        AssetDatabase.ImportAsset(filepath);
-        TextAsset csvFile = (TextAsset)Resources.Load(filename);
+        var csvFile = Resources.Load<TextAsset>(filename);
+        
+        //AssetDatabase.ImportAsset(filepath);
+        //TextAsset csvFile = (TextAsset)Resources.Load(filename);
         if (csvFile == null)
         {
             return new string[0, 0];
