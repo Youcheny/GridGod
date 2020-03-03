@@ -85,12 +85,6 @@ public class GridManager : MonoBehaviour
             tile = (GameObject)Instantiate(Resources.Load("IceTile")),
             type = "IceTile"
         };
-        Tile spike = new Tile()
-        {
-            tile = (GameObject)Instantiate(Resources.Load("SpikeTile")),
-            type = "SpikeTile"
-        };
-  
 
 
 
@@ -148,8 +142,6 @@ public class GridManager : MonoBehaviour
                         tile = tile,
                         type = "TrapTile"
                     };
-                    
-                    
                     tileRow.Add(trapTile);
                 }
                 else if (GridCSV[i, j] == "I")
@@ -195,6 +187,7 @@ public class GridManager : MonoBehaviour
     }
 
 
+
     private void GenerateConsumableFromCSV(string filepath, string filename)
     {
         print("entering");
@@ -212,6 +205,11 @@ public class GridManager : MonoBehaviour
         {
             consumable = (GameObject)Instantiate(Resources.Load("StepAdder")),
             type = "StepAdderTile"
+        };
+        Consumable spike = new Consumable()
+        {
+            consumable = (GameObject)Instantiate(Resources.Load("SpikeTile")),
+            type = "SpikeTile"
         };
 
         float centerOffsetX = -cols * tileSize / 2; // center
@@ -250,6 +248,16 @@ public class GridManager : MonoBehaviour
                     };
                     consumableRow.Add(stepAdderTile);
                 }
+                else if (GridCSV[i, j] == "T")
+                {
+                    consumable = (GameObject)Instantiate(spike.consumable, transform);
+                    SpikeTile spikeTile = new SpikeTile()
+                    {
+                        consumable = consumable,
+                        type = "SpikeTile"
+                    };
+                    consumableRow.Add(spikeTile);
+                }
                 else 
                 {
                     consumable = (GameObject)Instantiate(transparent.consumable, transform);
@@ -277,6 +285,7 @@ public class GridManager : MonoBehaviour
         Destroy(coin.consumable);
         Destroy(transparent.consumable);
         Destroy(stepAdder.consumable);
+        Destroy(spike.consumable);
     }
 
     private void GenerateTestGrid()

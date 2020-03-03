@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Models;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -62,22 +63,6 @@ public class PlayerMovement : MonoBehaviour
         float leftLimit = -1 * grid.GetCols() * tileSize/2;
         float rightLimit = grid.GetCols() * tileSize/2;
 
-        if (IsGameOver)
-        {
-            return;
-        }
-
-        //if the player reach the step limit
-        if (stepConstraint - counter <=0) {
-            return;
-        }
-
-        // check whether the player reaches the end
-        if (GetTile(nextPosition.x, nextPosition.y).type == "EndTile")
-        {
-            IsGameOver = true;
-            return;
-        }
         // if on a coin
         if (GetConsumable( (int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type == "CoinTile")
         {
@@ -96,13 +81,12 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         // if on a stepAdder
-        if (GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).type == "StepAdderTile")
+        if (GetConsumable(nextPosition.x, nextPosition.y).type == "StepAdderTile")
         {
             stepConstraint += 5;
-
-            
-            Destroy(GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).consumable);
-            GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).type = "null";
+            print("constraint: " + stepConstraint);
+            Destroy(GetConsumable(nextPosition.x, nextPosition.y).consumable);
+            GetConsumable(nextPosition.x, nextPosition.y).type = "null";
             return;
         }
 
@@ -166,17 +150,23 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
+        if (GetConsumable(nextPosition.x, nextPosition.y).type == "SpikeTile")
+        {
+            Destroy(GetConsumable(nextPosition.x, nextPosition.y).consumable);
+            GetConsumable(nextPosition.x, nextPosition.y).type = "null";
+        }
+
 
         // if player on trap, compare if player moved since last frame
-        if(GetTile(nextPosition.x, nextPosition.y).type == "TrapTile")
+        if (GetTile(nextPosition.x, nextPosition.y).type == "TrapTile" )
         {
             if(nextPosition.x != currFrameX || nextPosition.y != currFrameY)
             {
                 TrapTile currTrapTile = (TrapTile)(GetTile(nextPosition.x, nextPosition.y));
                 if (currTrapTile.IsVulnerable)
                 {
+                    print("jinnnnnnnnn");
                     IsGameOver = true;
-                    return;
                 }
                 else
                 {
@@ -186,7 +176,27 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-        
+
+        //if the player reach the step limit
+        if (stepConstraint - counter <= 0)
+        {
+            print(" is game over, stepConstraint: " + stepConstraint + ", counter: " + counter);
+            IsGameOver = true;
+        }
+
+        // check whether the player reaches the end
+        if (GetTile(nextPosition.x, nextPosition.y).type == "EndTile")
+        {
+            IsGameOver = true;
+        }
+
+        if (IsGameOver)
+        {
+            print("is in gameover");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+
         currFrameX = nextPosition.x;
         currFrameY = nextPosition.y;
 
