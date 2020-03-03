@@ -1,8 +1,8 @@
 ﻿S,I,I,I,I,I
-N,I,W,N,I,N
-N,W,N,T,I,N
+N,I,I,N,I,N
+N,N,N,N,I,N
+N,W,W,N,N,N
+N,W,N,N,W,N
+N,W,T,W,W,N
 N,W,N,N,N,N
-N,W,N,N,N,N
-N,W,N,N,N,N
-N,W,W,W,W,N
-N,W,W,W,W,E
+N,W,W,W,N,E
