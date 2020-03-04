@@ -931,14 +931,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   counter: 0
   stepConstraint: 15
-  moveSpeed: 5
+  moveSpeed: 3
   rb: {fileID: 1840347733}
+  movement: {x: 0, y: 0}
   grid: {fileID: 0}
   playerStats: {fileID: 1840347734}
   CurrDir: 
   IsGameOver: 0
   currFrameX: 0
   currFrameY: 0
+  swipeBehavior: {fileID: 0}
 --- !u!50 &1840347733
 Rigidbody2D:
   serializedVersion: 4
@@ -990,3 +992,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c883e4c707045f5b700a98a7444d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1840347737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840347731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8591837c502246a08ffacc35bb7dd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectSwipeOnlyAfterRelease: 0
+  SWIPE_THRESHOLD: 200
+  movement: {x: 0, y: 0}

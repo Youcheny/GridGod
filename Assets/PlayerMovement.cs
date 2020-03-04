@@ -15,13 +15,13 @@ public class PlayerMovement : MonoBehaviour
 
     public Rigidbody2D rb;
 
-    Vector2 movement;
+    public Vector2 movement;
 
     public GridManager grid;
     public PlayerStats playerStats;
     Vector2 nextPosition;
 
-    float epsilon = 0.001f; // for float comparison
+    float epsilon = 0.05f; // for float comparison
     float joystickSensitivity = 0.002222f;
 
     // Store the current moving direction
@@ -34,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
 
     // Joystick
     protected Joystick joystick;
+
+    // Swipe Behavior
+    public SwipeBehavior swipeBehavior;
 
     
     // Start is called before the first frame update
@@ -49,13 +52,14 @@ public class PlayerMovement : MonoBehaviour
         currFrameY = nextPosition.y;
 
         joystick = FindObjectOfType<Joystick>();
+        swipeBehavior = FindObjectOfType<SwipeBehavior>();
     }
     
     // Update is called once per frame
     void Update()
     {
-        movement.x = joystick.Horizontal * joystickSensitivity + Input.GetAxis("Horizontal");
-        movement.y = joystick.Vertical * joystickSensitivity + Input.GetAxis("Vertical");
+        movement.x = swipeBehavior.movement.x + Input.GetAxis("Horizontal");
+        movement.y = swipeBehavior.movement.y + Input.GetAxis("Vertical");
         // store variables used for movement
         float tileSize = grid.GetTileSize();
         float bottomLimit = -1 * grid.GetRows() * tileSize/2;
