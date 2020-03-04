@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     Vector2 nextPosition;
 
     float epsilon = 0.05f; // for float comparison
-    float joystickSensitivity = 0.002222f;
 
     // Store the current moving direction
     public string CurrDir;
@@ -31,9 +30,6 @@ public class PlayerMovement : MonoBehaviour
 
     public float currFrameX;
     public float currFrameY;
-
-    // Joystick
-    protected Joystick joystick;
 
     // Swipe Behavior
     public SwipeBehavior swipeBehavior;
@@ -50,8 +46,7 @@ public class PlayerMovement : MonoBehaviour
         nextPosition = GameObject.Find("Player").transform.position;
         currFrameX = nextPosition.x;
         currFrameY = nextPosition.y;
-
-        joystick = FindObjectOfType<Joystick>();
+        
         swipeBehavior = FindObjectOfType<SwipeBehavior>();
     }
     
