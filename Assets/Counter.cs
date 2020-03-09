@@ -1,16 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 // Used to keep track of the total number of movements
 public class Counter : MonoBehaviour
 {
 	public Transform player;
-	public Text counterText;
+	public TextMeshProUGUI counterText;
+
+    //void Start()
+    //{
+    //    counterText1 = GetComponent<TextMeshProUGUI>();
+    //}
     
     // Update is called once per frame
     void Update()
     {
-    	PlayerMovement movement = player.GetComponent(typeof(PlayerMovement)) as PlayerMovement;
-        counterText.text = "Steps: "+ movement.GetRemainingSteps().ToString();
+        //Camera camera = Camera.main;
+        //this.transform.position = camera.ViewportToWorldPoint(new Vector3(20, 100, camera.nearClipPlane));
+        
+        PlayerMovement movement = player.GetComponent(typeof(PlayerMovement)) as PlayerMovement;
+        counterText.SetText("Steps: " + movement.GetRemainingSteps().ToString());
+        
     }
 }
