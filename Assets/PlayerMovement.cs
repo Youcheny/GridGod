@@ -335,6 +335,6 @@ public class PlayerMovement : MonoBehaviour
         //print("x: " + x + "y: " + y + ";row: " + row + "; col: " + col);
         return grid.Consumables[row][col];
     }
-
+  
 
 }
