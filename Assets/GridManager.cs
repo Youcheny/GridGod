@@ -5,8 +5,8 @@ using Models;
 using System.Threading.Tasks;
 public class GridManager : MonoBehaviour
 {
-	private int rows = 8;
-	private int cols = 6;
+	private int rows;
+	private int cols;
 	private float tileSize = 1;
     
     private List<List<Tile>> Tiles;
@@ -14,20 +14,32 @@ public class GridManager : MonoBehaviour
 
     //spike tile for replacement
     public Tile spike = null;
+
+    public Vector2 StartPos;
     
     // Start is called before the first frame update
     void Start()
     {
         Tiles = new List<List<Tile>>();
         Consumables = new List<List<Consumable>>();
-        //ReadGrid("level1.csv");
-        //GenerateTestGrid();
-        // GenerateGridFromCSV("Assets/Resources/level1.csv", "level1");
 
-        //GenerateGridFromCSV("Assets/Resources/level2.csv", "level2");
-        GenerateGridFromCSV("Assets/Resources/TutorialLevel1.csv", "TutorialLevel1");
-        GenerateConsumableFromCSV("Assets/Resources/ConTutorial1.csv", "ConTutorial1");
-        //GenerateConsumableFromCSV("Assets/Resources/consumableGrid1.csv", "consumableGrid1");
+        // GenerateGridFromCSV("Assets/Resources/level1.csv", "level1");
+        // GenerateConsumableFromCSV("Assets/Resources/consumableGrid1.csv", "consumableGrid1");
+        // GenerateGridFromCSV("Assets/Resources/level2.csv", "level2");
+
+        // Tutorial Levels
+
+        // GenerateGridFromCSV("Assets/Resources/TutorialLevel1.csv", "TutorialLevel1");
+        // GenerateConsumableFromCSV("Assets/Resources/ConTutorial1.csv", "ConTutorial1");
+
+        // GenerateGridFromCSV("Assets/Resources/TutorialLevel2.csv", "TutorialLevel2");
+        // GenerateConsumableFromCSV("Assets/Resources/ConTutorial2.csv", "ConTutorial2");
+
+        // GenerateGridFromCSV("Assets/Resources/TutorialLevel3.csv", "TutorialLevel3");
+        // GenerateConsumableFromCSV("Assets/Resources/ConTutorial3.csv", "ConTutorial3");
+
+        GenerateGridFromCSV("Assets/Resources/TutorialLevel4.csv", "TutorialLevel4");
+        GenerateConsumableFromCSV("Assets/Resources/ConTutorial4.csv", "ConTutorial4");
     }
 
     // unused
@@ -89,16 +101,12 @@ public class GridManager : MonoBehaviour
         };
 
 
-
-
-
-
-    float centerOffsetX = -cols * tileSize / 2; // center
-        float centerOffsetY = rows * tileSize / 2;
-
         string[,] GridCSV = CsvUtil.readData(filepath, filename);
         rows = GridCSV.GetLength(0);
         cols = GridCSV.GetLength(1);
+
+        float centerOffsetX = -cols * tileSize / 2; // center
+        float centerOffsetY = rows * tileSize / 2;
         for (int i = 0; i < GridCSV.GetLength(0); i++)
         {
             List<Tile> tileRow = new List<Tile>();
@@ -169,6 +177,10 @@ public class GridManager : MonoBehaviour
 
                 float posX = j * tileSize + centerOffsetX;
                 float posY = i * -tileSize + centerOffsetY;
+                if (GridCSV[i,j] == "S")
+                {
+                    StartPos = new Vector2(posX, posY);
+                }
                 tile.transform.position = new Vector2(posX, posY);
             }
             Tiles.Add(tileRow);
@@ -214,10 +226,12 @@ public class GridManager : MonoBehaviour
             type = "SpikeTile"
         };
 
+        string[,] GridCSV = CsvUtil.readData(filepath, filename);
+        rows = GridCSV.GetLength(0);
+        cols = GridCSV.GetLength(1);
+
         float centerOffsetX = -cols * tileSize / 2; // center
         float centerOffsetY = rows * tileSize / 2;
-
-        string[,] GridCSV = CsvUtil.readData(filepath, filename);
         
 
         for (int i = 0; i < GridCSV.GetLength(0); i++)
