@@ -49,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         currFrameY = nextPosition.y;
         
         swipeBehavior = FindObjectOfType<SwipeBehavior>();
+        gameMessage = "Collect footprint to gain extra steps";
     }
     
     // Update is called once per frame
@@ -190,15 +191,15 @@ public class PlayerMovement : MonoBehaviour
             IsWin = true;
         }
 
-        if (IsGameOver)
-        {
-            gameMessage = "You Lose!!!";
-            return;
-        }
-
         if (IsWin)
         {
             gameMessage = "You Win!!!";
+            return;
+        }
+
+        if (IsGameOver)
+        {
+            gameMessage = "You Lose!!!";
             return;
         }
 
