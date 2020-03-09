@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public string CurrDir;
 
     public bool IsGameOver = false;
+    public bool IsWin = false;
 
     public float currFrameX;
     public float currFrameY;
@@ -34,7 +35,9 @@ public class PlayerMovement : MonoBehaviour
     // Swipe Behavior
     public SwipeBehavior swipeBehavior;
 
-    
+    public string gameMessage;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -186,13 +189,20 @@ public class PlayerMovement : MonoBehaviour
         // check whether the player reaches the end
         if (GetTile(nextPosition.x, nextPosition.y).type == "EndTile")
         {
-            IsGameOver = true;
+            IsWin = true;
         }
 
         if (IsGameOver)
         {
             print("is in gameover");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            gameMessage = "You Lose!!!";
+            return;
+        }
+
+        if (IsWin)
+        {
+            gameMessage = "You Win!!!";
+            return;
         }
 
 

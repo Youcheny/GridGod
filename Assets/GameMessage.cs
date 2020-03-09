@@ -12,6 +12,6 @@ public class GameMessage : MonoBehaviour
     void Update()
     {
         PlayerMovement movement = player.GetComponent(typeof(PlayerMovement)) as PlayerMovement;
-        gameMessage.SetText("Message: Got coin " + movement.playerStats.Consumables["Coin"].ToString());
+        gameMessage.SetText("Message: " + movement.gameMessage);
     }
 }
