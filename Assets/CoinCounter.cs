@@ -13,8 +13,8 @@ public class CoinCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Camera camera = Camera.main;
-        //this.transform.position = camera.ViewportToWorldPoint(new Vector3(20, 95, camera.nearClipPlane));
+        // Camera camera = Camera.main;
+        // this.transform.position = camera.ViewportToWorldPoint(new Vector3(20, 55, camera.nearClipPlane));
 
         PlayerMovement movement = player.GetComponent(typeof(PlayerMovement)) as PlayerMovement;
         counterText.SetText("Coins: " + movement.playerStats.Consumables["Coin"].ToString());
