@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         currFrameY = nextPosition.y;
         
         swipeBehavior = FindObjectOfType<SwipeBehavior>();
-        gameMessage = "Collect footprint to gain extra steps";
+        // gameMessage = "Collect footprint to gain extra steps";
     }
     
     // Update is called once per frame
