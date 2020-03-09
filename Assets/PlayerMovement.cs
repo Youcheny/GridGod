@@ -43,9 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         grid = GameObject.Find("GridHolder").GetComponent<GridManager>();
         playerStats = new PlayerStats();
-        GameObject.Find("Player").transform.position =
-            new Vector2(-grid.GetCols() * grid.GetTileSize() / 2,
-            grid.GetRows() * grid.GetTileSize() / 2);
+        GameObject.Find("Player").transform.position = grid.StartPos;
         nextPosition = GameObject.Find("Player").transform.position;
         currFrameX = nextPosition.x;
         currFrameY = nextPosition.y;
@@ -66,7 +64,8 @@ public class PlayerMovement : MonoBehaviour
         float rightLimit = grid.GetCols() * tileSize/2;
 
         // if on a coin
-        if (GetConsumable( (int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type == "CoinTile")
+       
+        if (GetConsumable((int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type == "CoinTile")
         {
             if (playerStats.Consumables.ContainsKey("Coin"))
             {
@@ -79,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
             print("Coins: "+  playerStats.Consumables["Coin"]);
             Destroy(GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).consumable);
-            GetConsumable( (int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type = "null";
+            GetConsumable((int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type = "null";
             return;
         }
         // if on a stepAdder
@@ -167,7 +166,6 @@ public class PlayerMovement : MonoBehaviour
                 TrapTile currTrapTile = (TrapTile)(GetTile(nextPosition.x, nextPosition.y));
                 if (currTrapTile.IsVulnerable)
                 {
-                    print("jinnnnnnnnn");
                     IsGameOver = true;
                 }
                 else
@@ -194,7 +192,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsGameOver)
         {
-            print("is in gameover");
             gameMessage = "You Lose!!!";
             return;
         }
@@ -324,7 +321,7 @@ public class PlayerMovement : MonoBehaviour
     {
         int row = grid.GetRows() / 2 - (int)y;
         int col = grid.GetCols() / 2 + (int)x;
-        //print("x: " + x + "y: " + y + ";row: " + row + "; col: " + col);
+        print("In GetTile, "+ "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
         return grid.GetTiles()[row][col];
     }
 
@@ -332,9 +329,10 @@ public class PlayerMovement : MonoBehaviour
     {
         int row = grid.GetRows() / 2 - (int)y;
         int col = grid.GetCols() / 2 + (int)x;
-        //print("x: " + x + "y: " + y + ";row: " + row + "; col: " + col);
+        print("In GetConsumable, "+ "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
         return grid.Consumables[row][col];
     }
-  
+
+
 
 }
