@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
         // if on a coin
        
-        if (GetConsumable((int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type == "CoinTile")
+        if (/*GridManager*/grid.GetConsumable((int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type == "CoinTile")
         {
             if (playerStats.Consumables.ContainsKey("Coin"))
             {
@@ -78,29 +78,29 @@ public class PlayerMovement : MonoBehaviour
             }
 
             print("Coins: "+  playerStats.Consumables["Coin"]);
-            Destroy(GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).consumable);
-            GetConsumable((int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type = "null";
+            Destroy(grid.GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).consumable);
+            grid.GetConsumable((int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type = "null";
             return;
         }
         // if on a stepAdder
-        if (GetConsumable(nextPosition.x, nextPosition.y).type == "StepAdderTile")
+        if (grid.GetConsumable(nextPosition.x, nextPosition.y).type == "StepAdderTile")
         {
             stepConstraint += 5;
             print("constraint: " + stepConstraint);
-            Destroy(GetConsumable(nextPosition.x, nextPosition.y).consumable);
-            GetConsumable(nextPosition.x, nextPosition.y).type = "null";
+            Destroy(grid.GetConsumable(nextPosition.x, nextPosition.y).consumable);
+            grid.GetConsumable(nextPosition.x, nextPosition.y).type = "null";
             return;
         }
 
         // if player on ice
-        if (GetTile(nextPosition.x, nextPosition.y).type == "IceTile")
+        if (/*GridManager*/grid.GetTile(nextPosition.x, nextPosition.y).type == "IceTile")
         {
             if(CurrDir =="down")
             {
                 // if in bound
                 if(nextPosition.y - tileSize > bottomLimit) 
                 {
-                    Tile nextTile = GetTile(nextPosition.x, nextPosition.y-tileSize);
+                    Tile nextTile = grid.GetTile(nextPosition.x, nextPosition.y-tileSize);
                     if (nextTile.IsPassable())
                     {
                         nextPosition.y -= tileSize;
@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
                 // if in bound
                 if(nextPosition.y + tileSize <= topLimit) 
                 {
-                    Tile nextTile = GetTile(nextPosition.x, nextPosition.y+tileSize);
+                    Tile nextTile = grid.GetTile(nextPosition.x, nextPosition.y+tileSize);
                     if (nextTile.IsPassable())
                     {
                         nextPosition.y += tileSize;
@@ -128,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
                 // if in bound
                 if(nextPosition.x - tileSize >= leftLimit) 
                 {
-                    Tile nextTile = GetTile(nextPosition.x-tileSize, nextPosition.y);
+                    Tile nextTile = grid.GetTile(nextPosition.x-tileSize, nextPosition.y);
                     if (nextTile.IsPassable())
                     {
                         nextPosition.x -= tileSize;
@@ -142,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
                 // if in bound
                 if(nextPosition.x + tileSize < rightLimit) 
                 {
-                    Tile nextTile = GetTile(nextPosition.x+tileSize, nextPosition.y);
+                    Tile nextTile = grid.GetTile(nextPosition.x+tileSize, nextPosition.y);
                     if (nextTile.IsPassable())
                     {
                         nextPosition.x += tileSize;
@@ -152,26 +152,26 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-        if (GetConsumable(nextPosition.x, nextPosition.y).type == "SpikeTile")
+        if (grid.GetConsumable(nextPosition.x, nextPosition.y).type == "SpikeTile")
         {
-            Destroy(GetConsumable(nextPosition.x, nextPosition.y).consumable);
-            GetConsumable(nextPosition.x, nextPosition.y).type = "null";
+            Destroy(grid.GetConsumable(nextPosition.x, nextPosition.y).consumable);
+            grid.GetConsumable(nextPosition.x, nextPosition.y).type = "null";
         }
 
 
         // if player on trap, compare if player moved since last frame
-        if (GetTile(nextPosition.x, nextPosition.y).type == "TrapTile" )
+        if (grid.GetTile(nextPosition.x, nextPosition.y).type == "TrapTile" )
         {
             if(nextPosition.x != currFrameX || nextPosition.y != currFrameY)
             {
-                TrapTile currTrapTile = (TrapTile)(GetTile(nextPosition.x, nextPosition.y));
+                TrapTile currTrapTile = (TrapTile)(grid.GetTile(nextPosition.x, nextPosition.y));
                 if (currTrapTile.IsVulnerable)
                 {
                     IsGameOver = true;
                 }
                 else
                 {
-                    ((TrapTile)(GetTile(nextPosition.x, nextPosition.y))).IsVulnerable = true;
+                    ((TrapTile)(grid.GetTile(nextPosition.x, nextPosition.y))).IsVulnerable = true;
 
                 }
             }
@@ -186,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // check whether the player reaches the end
-        if (GetTile(nextPosition.x, nextPosition.y).type == "EndTile")
+        if (grid.GetTile(nextPosition.x, nextPosition.y).type == "EndTile")
         {
             IsWin = true;
         }
@@ -221,10 +221,10 @@ public class PlayerMovement : MonoBehaviour
                     // check bound
                     if(nextPosition.y - tileSize > bottomLimit) 
                     {
-                        if(GetTile(nextPosition.x, nextPosition.y - tileSize).IsPassable())
+                        if(grid.GetTile(nextPosition.x, nextPosition.y - tileSize).IsPassable())
                         {
                             // move down
-                            print("next tile: " + GetTile(nextPosition.x, nextPosition.y - tileSize).type);
+                            print("next tile: " + grid.GetTile(nextPosition.x, nextPosition.y - tileSize).type);
                             nextPosition.y -= tileSize;
                             IncrementCounter();
                         }
@@ -241,9 +241,9 @@ public class PlayerMovement : MonoBehaviour
                     if(nextPosition.y + tileSize <= topLimit) 
                     {
     
-                        if (GetTile(nextPosition.x, nextPosition.y + tileSize).IsPassable())
+                        if (grid.GetTile(nextPosition.x, nextPosition.y + tileSize).IsPassable())
                         {
-                            print("next tile: " + GetTile(nextPosition.x, nextPosition.y + tileSize).type);
+                            print("next tile: " + grid.GetTile(nextPosition.x, nextPosition.y + tileSize).type);
                             nextPosition.y += tileSize;
                             IncrementCounter();
                         }
@@ -261,9 +261,9 @@ public class PlayerMovement : MonoBehaviour
                     // move left
                     if(nextPosition.x - tileSize >= leftLimit) 
                     {
-                        if(GetTile(nextPosition.x - tileSize, nextPosition.y).IsPassable())
+                        if(grid.GetTile(nextPosition.x - tileSize, nextPosition.y).IsPassable())
                         {
-                            print("next tile: " + GetTile(nextPosition.x - tileSize, nextPosition.y).type);
+                            print("next tile: " + grid.GetTile(nextPosition.x - tileSize, nextPosition.y).type);
                             nextPosition.x -= tileSize;
                             IncrementCounter();
                         }
@@ -277,9 +277,9 @@ public class PlayerMovement : MonoBehaviour
                     CurrDir = "right";
                     if(nextPosition.x + tileSize < rightLimit) 
                     {
-                        if (GetTile(nextPosition.x + tileSize, nextPosition.y).IsPassable())
+                        if (grid.GetTile(nextPosition.x + tileSize, nextPosition.y).IsPassable())
                         {
-                            print("next tile: " + GetTile(nextPosition.x + tileSize, nextPosition.y).type);
+                            print("next tile: " + grid.GetTile(nextPosition.x + tileSize, nextPosition.y).type);
                             nextPosition.x += tileSize;
                             IncrementCounter();
                         }
@@ -316,22 +316,6 @@ public class PlayerMovement : MonoBehaviour
     public int GetRemainingSteps()
     {
         return stepConstraint - counter;
-    }
-
-    private Tile GetTile(float x, float y)
-    {
-        int row = grid.GetRows() / 2 - (int)y;
-        int col = grid.GetCols() / 2 + (int)x;
-        print("In GetTile, "+ "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
-        return grid.GetTiles()[row][col];
-    }
-
-    private Consumable GetConsumable(float x, float y)
-    {
-        int row = grid.GetRows() / 2 - (int)y;
-        int col = grid.GetCols() / 2 + (int)x;
-        print("In GetConsumable, "+ "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
-        return grid.Consumables[row][col];
     }
 
 
