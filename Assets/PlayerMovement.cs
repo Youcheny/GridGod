@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public SwipeBehavior swipeBehavior;
 
     public string gameMessage;
-
+    public int level;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
         currFrameY = nextPosition.y;
         
         swipeBehavior = FindObjectOfType<SwipeBehavior>();
+
+        level = 1;
     }
     
     // Update is called once per frame
@@ -321,15 +323,16 @@ public class PlayerMovement : MonoBehaviour
     {
         int row = grid.GetRows() / 2 - (int)y;
         int col = grid.GetCols() / 2 + (int)x;
-        print("In GetTile, "+ "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
+        //print("In GetTile, "+ "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
         return grid.GetTiles()[row][col];
     }
 
     private Consumable GetConsumable(float x, float y)
     {
+
         int row = grid.GetRows() / 2 - (int)y;
         int col = grid.GetCols() / 2 + (int)x;
-        print("In GetConsumable, "+ "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
+        //print("In GetConsumable, "+ "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
         return grid.Consumables[row][col];
     }
 
