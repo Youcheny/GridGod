@@ -337,4 +337,19 @@ public class GridManager : MonoBehaviour
 
         Tiles[row][col] = spike;
     }
+    public Tile GetTile(float x, float y)
+    {
+        int row = GetRows() / 2 - (int)y;
+        int col = GetCols() / 2 + (int)x;
+        print("In GetTile, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
+        return GetTiles()[row][col];
+    }
+
+    public Consumable GetConsumable(float x, float y)
+    {
+        int row = GetRows() / 2 - (int)y;
+        int col = GetCols() / 2 + (int)x;
+        print("In GetConsumable, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
+        return Consumables[row][col];
+    }
 }
