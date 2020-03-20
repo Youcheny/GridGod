@@ -8,8 +8,8 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         print("here");
-        SceneManager.LoadScene("LevelScene");
+        SceneManager.LoadScene("LevelScene",LoadSceneMode.Additive);
         
-        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("LevelScene"));
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("SampleScene"));
     }
 }

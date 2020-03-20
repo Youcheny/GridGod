@@ -35,11 +35,11 @@ public class GridManager : MonoBehaviour
         // GenerateGridFromCSV("Assets/Resources/TutorialLevel2.csv", "TutorialLevel2");
         // GenerateConsumableFromCSV("Assets/Resources/ConTutorial2.csv", "ConTutorial2");
 
-        // GenerateGridFromCSV("Assets/Resources/TutorialLevel3.csv", "TutorialLevel3");
-        // GenerateConsumableFromCSV("Assets/Resources/ConTutorial3.csv", "ConTutorial3");
+        GenerateGridFromCSV("Assets/Resources/TutorialLevel3.csv", "TutorialLevel3");
+        GenerateConsumableFromCSV("Assets/Resources/ConTutorial3.csv", "ConTutorial3");
 
-        GenerateGridFromCSV("Assets/Resources/TutorialLevel4.csv", "TutorialLevel4");
-        GenerateConsumableFromCSV("Assets/Resources/ConTutorial4.csv", "ConTutorial4");
+        //GenerateGridFromCSV("Assets/Resources/TutorialLevel4.csv", "TutorialLevel4");
+        //GenerateConsumableFromCSV("Assets/Resources/ConTutorial4.csv", "ConTutorial4");
     }
 
     // unused
