@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float currFrameX;
     public float currFrameY;
-
+    public bool winFlag = false;
     // Swipe Behavior
     public SwipeBehavior swipeBehavior;
 
@@ -196,12 +196,25 @@ public class PlayerMovement : MonoBehaviour
         if (IsWin)
         {
             gameMessage = "You Win!!!";
+            if (!winFlag)
+            {
+                CoinManager.numOfCoins += playerStats.Consumables["Coin"];
+                winFlag = true;
+            }
+           
+            
             return;
         }
 
         if (IsGameOver)
         {
             gameMessage = "You Lose!!!";
+
+            CoinManager.numOfCoins -=5;
+            if (CoinManager.numOfCoins < 0)
+            {
+                CoinManager.numOfCoins = 0;
+            }
             return;
         }
 

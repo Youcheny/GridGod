@@ -22,9 +22,17 @@ public class GridManager : MonoBehaviour
     {
         Tiles = new List<List<Tile>>();
         Consumables = new List<List<Consumable>>();
-
-        // GenerateGridFromCSV("Assets/Resources/level1.csv", "level1");
-        // GenerateConsumableFromCSV("Assets/Resources/consumableGrid1.csv", "consumableGrid1");
+        int level = LevelManager.NextLevel;
+        string levelString = level.ToString();
+        
+        if(levelString == "0")
+        {
+            levelString = "1";
+        }
+        //print(level);
+        GenerateGridFromCSV("Assets/Resources/level" + levelString + ".csv", "level" + levelString);
+        GenerateConsumableFromCSV("Assets/Resources/consumable" + levelString + ".csv", "consumable" + levelString);
+       
         // GenerateGridFromCSV("Assets/Resources/level2.csv", "level2");
 
         // Tutorial Levels
@@ -35,8 +43,8 @@ public class GridManager : MonoBehaviour
         // GenerateGridFromCSV("Assets/Resources/TutorialLevel2.csv", "TutorialLevel2");
         // GenerateConsumableFromCSV("Assets/Resources/ConTutorial2.csv", "ConTutorial2");
 
-        GenerateGridFromCSV("Assets/Resources/TutorialLevel3.csv", "TutorialLevel3");
-        GenerateConsumableFromCSV("Assets/Resources/ConTutorial3.csv", "ConTutorial3");
+        //GenerateGridFromCSV("Assets/Resources/TutorialLevel3.csv", "TutorialLevel3");
+        //GenerateConsumableFromCSV("Assets/Resources/ConTutorial3.csv", "ConTutorial3");
 
         //GenerateGridFromCSV("Assets/Resources/TutorialLevel4.csv", "TutorialLevel4");
         //GenerateConsumableFromCSV("Assets/Resources/ConTutorial4.csv", "ConTutorial4");
@@ -349,6 +357,7 @@ public class GridManager : MonoBehaviour
     {
         int row = GetRows() / 2 - (int)y;
         int col = GetCols() / 2 + (int)x;
+        //print(row + " " + col)
         //print("In GetConsumable, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
         return Consumables[row][col];
     }
