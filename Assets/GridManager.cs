@@ -341,7 +341,7 @@ public class GridManager : MonoBehaviour
     {
         int row = GetRows() / 2 - (int)y;
         int col = GetCols() / 2 + (int)x;
-        print("In GetTile, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
+        //print("In GetTile, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
         return GetTiles()[row][col];
     }
 
@@ -349,7 +349,7 @@ public class GridManager : MonoBehaviour
     {
         int row = GetRows() / 2 - (int)y;
         int col = GetCols() / 2 + (int)x;
-        print("In GetConsumable, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
+        //print("In GetConsumable, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
         return Consumables[row][col];
     }
 }

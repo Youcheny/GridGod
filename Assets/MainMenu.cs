@@ -8,6 +8,8 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         print("here");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("LevelScene");
+        
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("LevelScene"));
     }
 }
