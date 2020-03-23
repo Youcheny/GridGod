@@ -1778,6 +1778,7 @@ MonoBehaviour:
   IsWin: 0
   currFrameX: 0
   currFrameY: 0
+  winFlag: 0
   swipeBehavior: {fileID: 0}
   gameMessage: 
   level: 0
@@ -1847,3 +1848,15 @@ MonoBehaviour:
   detectSwipeOnlyAfterRelease: 0
   SWIPE_THRESHOLD: 200
   movement: {x: 0, y: 0}
+--- !u!114 &1840347739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840347731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24258a18cc0a4f649223d4311ee46ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
