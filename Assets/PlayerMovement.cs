@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Models;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -199,9 +200,9 @@ public class PlayerMovement : MonoBehaviour
             if (!winFlag)
             {
                 CoinManager.numOfCoins += playerStats.Consumables["Coin"];
+                SendWinAnalytics();
                 winFlag = true;
             }
-           
             
             return;
         }
@@ -333,7 +334,28 @@ public class PlayerMovement : MonoBehaviour
         return stepConstraint - counter;
     }
 
+    public void SendWinAnalytics()
+    {
+        print("Sending win analytics");
 
+        AnalyticsResult result = AnalyticsEvent.Custom("level_complete", new Dictionary<string, object>
+        {
+            { "coin", CoinManager.numOfCoins },
+            { "time_elapsed", Time.timeSinceLevelLoad }
+        });
+
+        print("result = " + result);
+
+
+        if (result == AnalyticsResult.Ok)
+        {
+            print("result = True");
+        }
+        else
+        {
+            print("result = false");
+        }
+    }
 
 
 }
