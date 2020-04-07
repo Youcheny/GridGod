@@ -23,6 +23,7 @@ public class Back : MonoBehaviour
 
     void RestartLevelOnClick()
     {
+        TrialNum.numOfTrial = 0;
         SceneManager.LoadScene("LevelScene",LoadSceneMode.Additive);
     }
 }

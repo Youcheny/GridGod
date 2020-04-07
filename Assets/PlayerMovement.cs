@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool sentLoseAnalytics = false;
 
+    public int star;
     // Start is called before the first frame update
     void Start()
     {
@@ -198,9 +199,21 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsWin)
         {
-            gameMessage = "You Win!!!";
+            
             if (!winFlag)
             {
+                star = 1;
+                if (playerStats.Consumables["Coin"] > 2)
+                {
+                    print("coin if");
+                    star++;
+                }
+                if (stepConstraint - counter > 3)
+                {
+                    print("step if");
+                    star++;
+                }
+                gameMessage = "You Win!!! Rating: You Got " + star + "/3 Stars!!";
                 CoinManager.numOfCoins += playerStats.Consumables["Coin"];
                 SendWinAnalytics();
                 winFlag = true;
@@ -212,9 +225,10 @@ public class PlayerMovement : MonoBehaviour
         if (IsGameOver)
         {
             gameMessage = "You Lose!!!";
-
+            
             if(!sentLoseAnalytics)
             {
+                TrialNum.numOfTrial++;
                 SendLoseAnalytics();
 
                 CoinManager.numOfCoins -= 5;
@@ -352,15 +366,19 @@ public class PlayerMovement : MonoBehaviour
         {
             { "coin", playerStats.Consumables["Coin"] },
             { "time_elapsed", Time.timeSinceLevelLoad },
-            { "step_left", stepConstraint - counter}
+            { "step_left", stepConstraint - counter},
+            { "num_trial" ,TrialNum.numOfTrial },
+            { "keypoint_choice","Detour" },
+            { "star", star }
         });
+        
+        print("result = " + result + " num of trials: " + TrialNum.numOfTrial);
 
-        print("result = " + result);
-
-
+        
         if (result == AnalyticsResult.Ok)
         {
             print("result = True");
+            TrialNum.numOfTrial = 0;
         }
         else
         {
@@ -375,7 +393,8 @@ public class PlayerMovement : MonoBehaviour
         AnalyticsResult result = AnalyticsEvent.Custom("level_incomplete", new Dictionary<string, object>
         {
             { "coin", playerStats.Consumables["Coin"] },
-            { "time_elapsed", Time.timeSinceLevelLoad }
+            { "time_elapsed", Time.timeSinceLevelLoad },
+            { "keypoint_choice","Toward_Endpoint" }
         });
 
         print("result = " + result);
@@ -390,6 +409,5 @@ public class PlayerMovement : MonoBehaviour
             print("result = false");
         }
     }
-
 
 }
