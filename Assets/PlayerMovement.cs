@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     public string gameMessage;
     public int level;
 
+    public bool sentLoseAnalytics = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -211,11 +213,19 @@ public class PlayerMovement : MonoBehaviour
         {
             gameMessage = "You Lose!!!";
 
-            CoinManager.numOfCoins -=5;
-            if (CoinManager.numOfCoins < 0)
+            if(!sentLoseAnalytics)
             {
-                CoinManager.numOfCoins = 0;
+                SendLoseAnalytics();
+
+                CoinManager.numOfCoins -= 5;
+                if (CoinManager.numOfCoins < 0)
+                {
+                    CoinManager.numOfCoins = 0;
+                }
+
+                sentLoseAnalytics = true;
             }
+
             return;
         }
 
@@ -336,11 +346,35 @@ public class PlayerMovement : MonoBehaviour
 
     public void SendWinAnalytics()
     {
-        print("Sending win analytics");
+        print("Sending win analytics level_complete(coin:" + playerStats.Consumables["Coin"] + ", step_left:" + (stepConstraint - counter) + ")");
 
         AnalyticsResult result = AnalyticsEvent.Custom("level_complete", new Dictionary<string, object>
         {
-            { "coin", CoinManager.numOfCoins },
+            { "coin", playerStats.Consumables["Coin"] },
+            { "time_elapsed", Time.timeSinceLevelLoad },
+            { "step_left", stepConstraint - counter}
+        });
+
+        print("result = " + result);
+
+
+        if (result == AnalyticsResult.Ok)
+        {
+            print("result = True");
+        }
+        else
+        {
+            print("result = false");
+        }
+    }
+
+    public void SendLoseAnalytics()
+    {
+        print("Sending lose analytics level_incomplete(coin:" + playerStats.Consumables["Coin"] + ")");
+
+        AnalyticsResult result = AnalyticsEvent.Custom("level_incomplete", new Dictionary<string, object>
+        {
+            { "coin", playerStats.Consumables["Coin"] },
             { "time_elapsed", Time.timeSinceLevelLoad }
         });
 
