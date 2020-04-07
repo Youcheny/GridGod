@@ -73,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         // if on a coin
        
         if (/*GridManager*/grid.GetConsumable((int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type == "CoinTile")
+        if (/*GridManager*/grid.GetConsumable(rb.position.x,  rb.position.y).type == "CoinTile")
         {
             if (playerStats.Consumables.ContainsKey("Coin"))
             {
@@ -84,8 +85,8 @@ public class PlayerMovement : MonoBehaviour
             }
 
             print("Coins: "+  playerStats.Consumables["Coin"]);
-            Destroy(grid.GetConsumable((int)Math.Round(rb.position.x), (int)Math.Round(rb.position.y)).consumable);
-            grid.GetConsumable((int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type = "null";
+            Destroy(grid.GetConsumable(rb.position.x, rb.position.y).consumable);
+            grid.GetConsumable(rb.position.x,  rb.position.y).type = "null";
             return;
         }
         // if on a stepAdder
