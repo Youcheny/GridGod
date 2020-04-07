@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
         // if on a coin
        
-        if (/*GridManager*/grid.GetConsumable((int)Math.Round(rb.position.x),  (int)Math.Round(rb.position.y)).type == "CoinTile")
+        if (/*GridManager*/grid.GetConsumable(rb.position.x,  rb.position.y).type == "CoinTile")
         if (/*GridManager*/grid.GetConsumable(rb.position.x,  rb.position.y).type == "CoinTile")
         {
             if (playerStats.Consumables.ContainsKey("Coin"))
