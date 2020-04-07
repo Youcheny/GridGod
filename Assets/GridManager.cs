@@ -347,16 +347,16 @@ public class GridManager : MonoBehaviour
     }
     public Tile GetTile(float x, float y)
     {
-        int row = GetRows() / 2 - (int)y;
-        int col = GetCols() / 2 + (int)x;
+        int row = (int)Mathf.Round(GetRows() / 2.0f - y);
+        int col = (int)Mathf.Round(GetCols() / 2.0f + x);
         //print("In GetTile, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
         return GetTiles()[row][col];
     }
 
     public Consumable GetConsumable(float x, float y)
     {
-        int row = GetRows() / 2 - (int)y;
-        int col = GetCols() / 2 + (int)x;
+        int row = (int)Mathf.Round(GetRows() / 2.0f - y);
+        int col = (int)Mathf.Round(GetCols() / 2.0f + x);
         //print(row + " " + col)
         //print("In GetConsumable, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
         return Consumables[row][col];
