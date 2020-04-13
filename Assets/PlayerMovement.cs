@@ -5,6 +5,7 @@ using System;
 using Models;
 using UnityEngine.SceneManagement;
 using UnityEngine.Analytics;
+using UnityEditor;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -43,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
 
     public int star;
     // Start is called before the first frame update
+
+    public bool dialogBoxFlag = false;
+    public int dialogBoxCounter = 0;
+
     void Start()
     {
         grid = GameObject.Find("GridHolder").GetComponent<GridManager>();
@@ -200,7 +205,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsWin)
         {
-            
+            if(dialogBoxFlag && dialogBoxCounter > 30)
+            {
+                dialogBoxFlag = false;
+                dialogBoxCounter = 0;
+                if(EditorUtility.DisplayDialog("You win","Choose your action", "Back to level selection", "Ok" ))
+                {
+                    print("Pressed back to level selection.");
+                    SceneManager.LoadScene("LevelScene",LoadSceneMode.Additive);
+                }
+                else
+                {
+                    print("Pressed OK.");
+                }
+            }
             if (!winFlag)
             {
                 star = 1;
@@ -218,15 +236,33 @@ public class PlayerMovement : MonoBehaviour
                 CoinManager.numOfCoins += playerStats.Consumables["Coin"];
                 SendWinAnalytics();
                 winFlag = true;
+
+                dialogBoxFlag = true;
+                dialogBoxCounter++;
             }
-            
+            // keep counting frames to wait for enough time to show the dialog box
+            dialogBoxCounter++;
+
             return;
         }
 
         if (IsGameOver)
         {
             gameMessage = "You Lose!!!";
-            
+            if(dialogBoxFlag && dialogBoxCounter > 30)
+            {
+                dialogBoxFlag = false;
+                dialogBoxCounter = 0;
+                if(EditorUtility.DisplayDialog("You lose","Choose your action", "Back to level selection", "Ok" ))
+                {
+                    print("Pressed back to level selection.");
+                    SceneManager.LoadScene("LevelScene",LoadSceneMode.Additive);
+                }
+                else
+                {
+                    print("Pressed OK.");
+                }
+            }
             if(!sentLoseAnalytics)
             {
                 TrialNum.numOfTrial++;
@@ -239,7 +275,12 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 sentLoseAnalytics = true;
+
+                dialogBoxFlag = true;
+                dialogBoxCounter++;
             }
+            // keep counting frames to wait for enough time to show the dialog box
+            dialogBoxCounter++;
 
             return;
         }
@@ -331,6 +372,8 @@ public class PlayerMovement : MonoBehaviour
             print("next pos: " + nextPosition.x + ", " + nextPosition.y);
             
         }
+
+        
 
     }
 
