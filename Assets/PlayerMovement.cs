@@ -43,6 +43,10 @@ public class PlayerMovement : MonoBehaviour
     public bool sentLoseAnalytics = false;
 
     public int star;
+
+    // animation
+    public Animator animator;
+
     // Start is called before the first frame update
 
     public bool dialogBoxFlag = false;
@@ -76,8 +80,6 @@ public class PlayerMovement : MonoBehaviour
         float rightLimit = grid.GetCols() * tileSize/2;
 
         // if on a coin
-       
-        if (/*GridManager*/grid.GetConsumable(rb.position.x,  rb.position.y).type == "CoinTile")
         if (/*GridManager*/grid.GetConsumable(rb.position.x,  rb.position.y).type == "CoinTile")
         {
             if (playerStats.Consumables.ContainsKey("Coin"))
@@ -298,7 +300,6 @@ public class PlayerMovement : MonoBehaviour
                 movement.x = 0;
                 if (movement.y < 0)
                 {
-                    rb.rotation = 180;
                     CurrDir = "down";
                     // check bound
                     if(nextPosition.y - tileSize > bottomLimit) 
@@ -317,7 +318,6 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     // move up
-                    rb.rotation = 0;
                     CurrDir = "up";
                     // check bound
                     if(nextPosition.y + tileSize <= topLimit) 
@@ -338,7 +338,6 @@ public class PlayerMovement : MonoBehaviour
                 movement.y = 0;
                 if (movement.x < 0)
                 {
-                    rb.rotation = 90;
                     CurrDir = "left";
                     // move left
                     if(nextPosition.x - tileSize >= leftLimit) 
@@ -355,7 +354,6 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     // move right
-                    rb.rotation = -90;
                     CurrDir = "right";
                     if(nextPosition.x + tileSize < rightLimit) 
                     {
@@ -370,11 +368,16 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
             print("next pos: " + nextPosition.x + ", " + nextPosition.y);
-            
+
         }
-
-        
-
+        // animation
+        Vector2 dir = nextPosition - rb.position + movement;
+        if (dir.sqrMagnitude < epsilon)
+            dir = Vector2.zero;
+        else dir.Normalize();
+        animator.SetFloat("Horizontal", dir.x);
+        animator.SetFloat("Vertical", dir.y);
+        animator.SetFloat("Speed", dir.sqrMagnitude);
     }
 
     void FixedUpdate()
