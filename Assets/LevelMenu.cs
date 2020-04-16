@@ -30,7 +30,7 @@ public class LevelMenu : MonoBehaviour
 
     private void LoadLevel(int level)
     {
-        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("SampleScene");
         LevelManager.NextLevel = level;
     }
 }

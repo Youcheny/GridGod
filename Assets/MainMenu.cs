@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         print("here");
-        SceneManager.LoadScene("LevelScene",LoadSceneMode.Additive);
+        SceneManager.LoadScene("LevelScene");
         
         //SceneManager.SetActiveScene(SceneManager.GetSceneByName("SampleScene"));
     }
