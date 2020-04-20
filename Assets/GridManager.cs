@@ -78,10 +78,37 @@ public class GridManager : MonoBehaviour
             type = "ObstacleTile"
         };
 
-        Tile normal = new Tile()
-        {
-            tile = (GameObject)Instantiate(Resources.Load("NormalTile")),
-            type = "NormalTile"
+        Tile[] normalTiles = {
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-105")),
+                type = "NormalTile"
+            }, // uncracked
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-81")),
+                type = "NormalTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-82")),
+                type = "NormalTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-83")),
+                type = "NormalTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-103")),
+                type = "NormalTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-104")),
+                type = "NormalTile"
+            }
         };
 
         Tile start = new Tile()
@@ -174,7 +201,8 @@ public class GridManager : MonoBehaviour
                 }
                 else
                 {
-                    tile = (GameObject)Instantiate(normal.tile, transform);
+                    int randomChoice = (int)Random.Range(0, normalTiles.Length - 0.001f);
+                    tile = (GameObject)Instantiate(normalTiles[randomChoice].tile, transform);
                     NormalTile normalTile = new NormalTile()
                     {
                         tile = tile,
@@ -198,7 +226,10 @@ public class GridManager : MonoBehaviour
 
 
         Destroy(obstacle.tile);
-        Destroy(normal.tile);
+        foreach (Tile crackedTile in normalTiles)
+        {
+            Destroy(crackedTile.tile);
+        }
         Destroy(start.tile);
         Destroy(end.tile);
         Destroy(trap.tile);
