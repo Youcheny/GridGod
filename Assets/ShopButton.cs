@@ -4,19 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class BackButton : MonoBehaviour
+public class ShopButton : MonoBehaviour
 {
     public Button playBtn;
 
     void Start()
     {
         Button btn = playBtn.GetComponent<Button>();
-        btn.onClick.AddListener(Back);
+        btn.onClick.AddListener(Shop);
     }
 
 
-    public void Back()
+    public void Shop()
     {
-        SceneManager.LoadScene("MainMenuScene");
+        SceneManager.LoadScene("ShopScene");
     }
 }

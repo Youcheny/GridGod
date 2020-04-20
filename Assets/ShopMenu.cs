@@ -17,15 +17,38 @@ public class ShopMenu : MonoBehaviour
         foreach (Button button in buttons)
         {
             string text = button.GetComponentInChildren<TextMeshProUGUI>().text;
-            button.onClick.AddListener(delegate { UnlockLevel(int.Parse(text)); });
+            if (LevelManager.IsBonusLevelUnlocked[int.Parse(text)-1])
+            {
+                button.interactable = false;
+            }
+            else
+            {
+                button.onClick.AddListener(delegate { UnlockLevel(int.Parse(text)); });
+            }
         }
+    }
+
+    public void Update()
+    {
+        levelButtonContainer = GameObject.Find("Main Camera/Canvas/UnlockMenu");
+        Button[] buttons = levelButtonContainer.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            string text = button.GetComponentInChildren<TextMeshProUGUI>().text;
+            if (LevelManager.IsBonusLevelUnlocked[int.Parse(text)-1])
+            {
+                button.interactable = false;
+            }
+        }
+
     }
 
     private void UnlockLevel(int level)
     {
     	if (CoinManager.numOfCoins >= 5)
     	{
-    		// TODO: actually unlock levels
+    		// actually unlock levels
+            LevelManager.IsBonusLevelUnlocked[level-1] = true;
 
     		// deduct coins
     		CoinManager.numOfCoins-=5;
