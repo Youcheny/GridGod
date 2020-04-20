@@ -208,21 +208,21 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsWin)
         {
-            if(dialogBoxFlag && dialogBoxCounter > 30)
-            {
-                dialogBoxFlag = false;
-                dialogBoxCounter = 0;
-                if(EditorUtility.DisplayDialog("You win","Choose your action", "Back to level selection", "Ok" ))
-                {
-                    print("Pressed back to level selection.");
-                    SceneManager.LoadScene("LevelScene",LoadSceneMode.Additive);
-                    // SceneManager.SetActiveScene(SceneManager.GetSceneByName("LevelScene"));
-                }
-                else
-                {
-                    print("Pressed OK.");
-                }
-            }
+            // if(dialogBoxFlag && dialogBoxCounter > 30)
+            // {
+            //     dialogBoxFlag = false;
+            //     dialogBoxCounter = 0;
+            //     if(EditorUtility.DisplayDialog("You win","Choose your action", "Back to level selection", "Ok" ))
+            //     {
+            //         print("Pressed back to level selection.");
+            //         SceneManager.LoadScene("LevelScene",LoadSceneMode.Additive);
+            //         // SceneManager.SetActiveScene(SceneManager.GetSceneByName("LevelScene"));
+            //     }
+            //     else
+            //     {
+            //         print("Pressed OK.");
+            //     }
+            // }
             if (!winFlag)
             {
                 star = 1;
@@ -253,21 +253,21 @@ public class PlayerMovement : MonoBehaviour
         if (IsGameOver)
         {
             gameMessage = "You Lose!!!";
-            if(dialogBoxFlag && dialogBoxCounter > 30)
-            {
-                dialogBoxFlag = false;
-                dialogBoxCounter = 0;
-                if(EditorUtility.DisplayDialog("You lose","Choose your action", "Back to level selection", "Ok" ))
-                {
-                    print("Pressed back to level selection.");
-                    SceneManager.LoadScene("LevelScene",LoadSceneMode.Additive);
-                    // SceneManager.SetActiveScene(SceneManager.GetSceneByName("LevelScene"));
-                }
-                else
-                {
-                    print("Pressed OK.");
-                }
-            }
+            // if(dialogBoxFlag && dialogBoxCounter > 30)
+            // {
+            //     dialogBoxFlag = false;
+            //     dialogBoxCounter = 0;
+            //     if(EditorUtility.DisplayDialog("You lose","Choose your action", "Back to level selection", "Ok" ))
+            //     {
+            //         print("Pressed back to level selection.");
+            //         SceneManager.LoadScene("LevelScene",LoadSceneMode.Additive);
+            //         // SceneManager.SetActiveScene(SceneManager.GetSceneByName("LevelScene"));
+            //     }
+            //     else
+            //     {
+            //         print("Pressed OK.");
+            //     }
+            // }
             if(!sentLoseAnalytics)
             {
                 TrialNum.numOfTrial++;
