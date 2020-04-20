@@ -108,6 +108,21 @@ public class GridManager : MonoBehaviour
             {
                 tile = (GameObject)Instantiate(Resources.Load("tileset-104")),
                 type = "NormalTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-292")),
+                type = "NormalTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-293")),
+                type = "NormalTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-294")),
+                type = "NormalTile"
             }
         };
 
