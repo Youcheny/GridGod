@@ -6,6 +6,7 @@ using Models;
 using UnityEngine.SceneManagement;
 using UnityEngine.Analytics;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -52,8 +53,12 @@ public class PlayerMovement : MonoBehaviour
     public bool dialogBoxFlag = false;
     public int dialogBoxCounter = 0;
 
+    public GameMessagePanel gameMessagePanel;
+
     void Start()
     {
+        gameMessagePanel = GameObject.Find("GameMessagePanel").GetComponent<GameMessagePanel>();
+        gameMessagePanel.togglePanel(false);
 
         grid = GameObject.Find("GridHolder").GetComponent<GridManager>();
         playerStats = new PlayerStats();

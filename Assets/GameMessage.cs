@@ -12,6 +12,12 @@ public class GameMessage : MonoBehaviour
     void Update()
     {
         PlayerMovement movement = player.GetComponent(typeof(PlayerMovement)) as PlayerMovement;
-        gameMessage.SetText("Message: " + movement.gameMessage);
+        
+        if(movement.gameMessage != "")
+        {
+            gameMessage.SetText(movement.gameMessage);
+            movement.gameMessagePanel.togglePanel(true);
+        }
+        
     }
 }
