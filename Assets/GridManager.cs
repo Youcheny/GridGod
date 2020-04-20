@@ -162,7 +162,7 @@ public class GridManager : MonoBehaviour
 
         Tile trap = new Tile()
         {
-            tile = (GameObject)Instantiate(Resources.Load("TrapTile")),
+            tile = (GameObject)Instantiate(Resources.Load("SpikeTile")),
             type = "TrapTile"
         };
 
@@ -299,7 +299,7 @@ public class GridManager : MonoBehaviour
         };
         Consumable spike = new Consumable()
         {
-            consumable = (GameObject)Instantiate(Resources.Load("SpikeTile")),
+            consumable = (GameObject)Instantiate(Resources.Load("TrapTile")),
             type = "SpikeTile"
         };
 
@@ -408,8 +408,11 @@ public class GridManager : MonoBehaviour
     {
         return Tiles;
     }
-    public void ReloadTrap(int row, int col)
+
+    public void ReloadTrap(float x, float y)
     {
+        int row = (int)Mathf.Round(GetRows() / 2.0f - y);
+        int col = (int)Mathf.Round(GetCols() / 2.0f + x);
         Tile temp = Tiles[row][col];
 
         Tiles[row][col] = spike;

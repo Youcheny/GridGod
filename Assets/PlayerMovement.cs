@@ -172,11 +172,6 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-        if (grid.GetConsumable(nextPosition.x, nextPosition.y).type == "SpikeTile")
-        {
-            Destroy(grid.GetConsumable(nextPosition.x, nextPosition.y).consumable);
-            grid.GetConsumable(nextPosition.x, nextPosition.y).type = "null";
-        }
 
 
         // if player on trap, compare if player moved since last frame
@@ -319,8 +314,11 @@ public class PlayerMovement : MonoBehaviour
                             nextPosition.y -= tileSize;
                             IncrementCounter();
                         }
-                        
-                        
+                        if (grid.GetConsumable(rb.position.x, rb.position.y).type == "SpikeTile")
+                        {
+                            Destroy(grid.GetConsumable(rb.position.x, rb.position.y).consumable);
+                            grid.GetConsumable(rb.position.x, rb.position.y).type = "null";
+                        }
                     }
                 }
                 else
@@ -337,7 +335,11 @@ public class PlayerMovement : MonoBehaviour
                             nextPosition.y += tileSize;
                             IncrementCounter();
                         }
-                            
+                        if (grid.GetConsumable(rb.position.x, rb.position.y).type == "SpikeTile")
+                        {
+                            Destroy(grid.GetConsumable(rb.position.x, rb.position.y).consumable);
+                            grid.GetConsumable(rb.position.x, rb.position.y).type = "null";
+                        }
                     }
                 }
             }
@@ -356,7 +358,11 @@ public class PlayerMovement : MonoBehaviour
                             nextPosition.x -= tileSize;
                             IncrementCounter();
                         }
-                        
+                        if (grid.GetConsumable(rb.position.x, rb.position.y).type == "SpikeTile")
+                        {
+                            Destroy(grid.GetConsumable(rb.position.x, rb.position.y).consumable);
+                            grid.GetConsumable(rb.position.x, rb.position.y).type = "null";
+                        }
                     }
                 }
                 else
@@ -371,7 +377,11 @@ public class PlayerMovement : MonoBehaviour
                             nextPosition.x += tileSize;
                             IncrementCounter();
                         }
-                            
+                        if (grid.GetConsumable(rb.position.x, rb.position.y).type == "SpikeTile")
+                        {
+                            Destroy(grid.GetConsumable(rb.position.x, rb.position.y).consumable);
+                            grid.GetConsumable(rb.position.x, rb.position.y).type = "null";
+                        }
                     }
                 }
             }
