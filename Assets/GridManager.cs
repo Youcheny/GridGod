@@ -72,10 +72,32 @@ public class GridManager : MonoBehaviour
     }
     private void GenerateGridFromCSV(string filepath, string filename)
     {
-        Tile obstacle = new Tile()
-        {
-            tile = (GameObject)Instantiate(Resources.Load("ObstacleTile")),
-            type = "ObstacleTile"
+        Tile[] obstacleTiles = {
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-481")),
+                type = "ObstacleTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-484")),
+                type = "ObstacleTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-487")),
+                type = "ObstacleTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-489")),
+                type = "ObstacleTile"
+            },
+            new Tile()
+            {
+                tile = (GameObject)Instantiate(Resources.Load("tileset-554")),
+                type = "ObstacleTile"
+            }
         };
 
         Tile[] normalTiles = {
@@ -186,7 +208,8 @@ public class GridManager : MonoBehaviour
                 }
                 else if (GridCSV[i, j] == "W") //W = wallobstacle
                 {
-                    tile = (GameObject)Instantiate(obstacle.tile, transform);
+                    int randomChoice = (int)Random.Range(0, obstacleTiles.Length - 0.001f);
+                    tile = (GameObject)Instantiate(obstacleTiles[randomChoice].tile, transform);
                     ObstacleTile obstacleTile = new ObstacleTile()
                     {
                         tile = tile,
@@ -236,14 +259,14 @@ public class GridManager : MonoBehaviour
             }
             Tiles.Add(tileRow);
         }
-
-
-
-
-        Destroy(obstacle.tile);
-        foreach (Tile crackedTile in normalTiles)
+        
+        foreach (Tile obstacleTile in obstacleTiles)
         {
-            Destroy(crackedTile.tile);
+            Destroy(obstacleTile.tile);
+        }
+        foreach (Tile normalTile in normalTiles)
+        {
+            Destroy(normalTile.tile);
         }
         Destroy(start.tile);
         Destroy(end.tile);
