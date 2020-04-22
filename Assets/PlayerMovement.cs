@@ -388,14 +388,7 @@ public class PlayerMovement : MonoBehaviour
             print("next pos: " + nextPosition.x + ", " + nextPosition.y);
 
         }
-        // animation
-        Vector2 dir = nextPosition - rb.position + movement;
-        if (dir.sqrMagnitude < epsilon)
-            dir = Vector2.zero;
-        else dir.Normalize();
-        animator.SetFloat("Horizontal", dir.x);
-        animator.SetFloat("Vertical", dir.y);
-        animator.SetFloat("Speed", dir.sqrMagnitude);
+        PlayerAnimationUpdate();
     }
 
     void FixedUpdate()
@@ -406,6 +399,21 @@ public class PlayerMovement : MonoBehaviour
             dir.Normalize();
             rb.MovePosition(rb.position + dir * moveSpeed * Time.fixedDeltaTime);
         }
+    }
+
+    void PlayerAnimationUpdate()
+    {
+        Vector2 dir = movement;
+        if (grid.GetTile(rb.position.x, rb.position.y).type != "IceTile")
+        {
+            dir += nextPosition - rb.position;
+        }
+        if (dir.sqrMagnitude < epsilon)
+            dir = Vector2.zero;
+        else dir.Normalize();
+        animator.SetFloat("Horizontal", dir.x);
+        animator.SetFloat("Vertical", dir.y);
+        animator.SetFloat("Speed", dir.sqrMagnitude);
     }
 
     bool PlayerOnNextPosition()
