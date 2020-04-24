@@ -89,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
         float leftLimit = -1 * grid.GetCols() * tileSize/2;
         float rightLimit = grid.GetCols() * tileSize/2;
 
+        PlayerAnimationUpdate();
         if (!PlayerOnNextPosition())
         {
             return;
@@ -397,7 +398,6 @@ public class PlayerMovement : MonoBehaviour
             print("next pos: " + nextPosition.x + ", " + nextPosition.y);
 
         }
-        PlayerAnimationUpdate();
     }
 
     void FixedUpdate()
