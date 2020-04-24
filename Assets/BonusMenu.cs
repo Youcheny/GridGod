@@ -13,7 +13,6 @@ public class BonusMenu : MonoBehaviour
     {
         bonusLevelButtonContainer = GameObject.Find("Main Camera/Canvas/BonusMenu");
         Button[] buttons = bonusLevelButtonContainer.GetComponentsInChildren<Button>();
-        print("len: " + buttons.Length);
         foreach (Button button in buttons)
         {
             string text = button.GetComponentInChildren<TextMeshProUGUI>().text;
@@ -30,6 +29,6 @@ public class BonusMenu : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
         // TODO: fix level to be the correct level
-        LevelManager.NextLevel = level;
+        LevelManager.NextLevel = level + 9;
     }
 }
