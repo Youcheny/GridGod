@@ -430,7 +430,7 @@ public class GridManager : MonoBehaviour
         int row = (int)Mathf.Round(GetRows() / 2.0f - y);
         int col = (int)Mathf.Round(GetCols() / 2.0f + x);
         //print(row + " " + col)
-        //print("In GetConsumable, " + "x: " + x + "y: " + y + "; row: " + row + "; col: " + col);
+        print("In GetConsumable, " + "x: " + x + ", y: " + y + "; row: " + row + "; col: " + col);
         return Consumables[row][col];
     }
 }

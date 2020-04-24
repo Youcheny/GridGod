@@ -85,6 +85,11 @@ public class PlayerMovement : MonoBehaviour
         float leftLimit = -1 * grid.GetCols() * tileSize/2;
         float rightLimit = grid.GetCols() * tileSize/2;
 
+        if (!PlayerOnNextPosition())
+        {
+            return;
+        }       
+
         // if on a coin
         if (/*GridManager*/grid.GetConsumable(rb.position.x,  rb.position.y).type == "CoinTile")
         {
