@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour
         Consumables = new List<List<Consumable>>();
         int level = LevelManager.NextLevel;
         string levelString = level.ToString();
+        print("level: " + levelString);
         
         if(levelString == "0")
         {

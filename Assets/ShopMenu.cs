@@ -90,6 +90,7 @@ public class ShopMenu : MonoBehaviour
         {
             // add one stepAdder consumable
             ExtraStepAdder.numOfExtraStepAdder+=1;
+            //print("num step adder: " + ExtraStepAdder.numOfExtraStepAdder);
             // deduct coins
             CoinManager.numOfCoins-=5;
         }

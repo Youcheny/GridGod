@@ -59,7 +59,11 @@ public class PlayerMovement : MonoBehaviour
     {
         gameMessagePanel = GameObject.Find("GameMessagePanel").GetComponent<GameMessagePanel>();
         gameMessagePanel.togglePanel(false);
-
+        if (IfUseStepAdder.useOrNot)
+        {
+            stepConstraint += 5;
+            IfUseStepAdder.useOrNot = false;
+        }
         grid = GameObject.Find("GridHolder").GetComponent<GridManager>();
         playerStats = new PlayerStats();
         GameObject.Find("Player").transform.position = grid.StartPos;
@@ -257,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsGameOver)
         {
-            gameMessage = "You Lose!!!";
+            gameMessage = "You Lose!!! Need More Steps? Visit the Shop!";
             // if(dialogBoxFlag && dialogBoxCounter > 30)
             // {
             //     dialogBoxFlag = false;
