@@ -283,7 +283,7 @@ public class PlayerMovement : MonoBehaviour
                 TrialNum.numOfTrial++;
                 SendLoseAnalytics();
 
-                CoinManager.numOfCoins -= 5;
+                // CoinManager.numOfCoins -= 5;
                 if (CoinManager.numOfCoins < 0)
                 {
                     CoinManager.numOfCoins = 0;
